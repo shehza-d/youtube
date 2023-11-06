@@ -1,5 +1,5 @@
 import type { RequestHandler } from "express";
-import { db } from "../../db/index.mjs";
+import { db } from "../../db/index.js";
 import { genSalt, hash } from "bcrypt";
 import { IUser } from "../../types/index.js";
 import { isValid } from "../../helpers/index.js";

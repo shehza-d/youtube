@@ -1,6 +1,6 @@
 import type { RequestHandler } from "express";
 import { IUser } from "../types/index.js";
-import { db } from "../db/index.mjs";
+import { db } from "../db/index.js";
 import { ObjectId } from "mongodb";
 
 const collection = "users";

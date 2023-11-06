@@ -2,11 +2,11 @@
   "name": "youtube-clone-server",
   "version": "1.0.0",
   "description": "Backend of end-to-end YouTube clone app",
-  "main": "dist/server.mjs",
+  "main": "dist/server.js",
   "type": "module",
   "scripts": {
-    "start": "node dist/server.mjs",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/server.mjs\"",
+    "start": "node dist/server.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\"",
     "deploy": "gcloud app deploy",
     "format": "npx prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1"

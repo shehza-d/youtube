@@ -1,5 +1,5 @@
 import type { RequestHandler } from "express";
-import { db } from "../../db/index.mjs";
+import { db } from "../../db/index.js";
 import jwt from "jsonwebtoken";
 import { compare } from "bcrypt";
 import { IUser } from "../../types/index.js";

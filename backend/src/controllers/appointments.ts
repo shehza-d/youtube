@@ -1,4 +1,4 @@
-import { db } from "../db/index.mjs";
+import { db } from "../db/index.js";
 import { ObjectId } from "mongodb";
 import { IAppointment } from "../types/index.js";
 import type { Request, Response } from "express";

@@ -6,6 +6,7 @@ coverage
 
 *.env
 .env
+.env.*
 **/build
 **/.git
 /.git

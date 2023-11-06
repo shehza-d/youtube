@@ -1,3 +1,34 @@
+# react start
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Dependency directories
+/node_modules
+node_modules/
+**/node_modules/
+jspm_packages/
+/.pnp
+.pnp.js
+
+**/app.yaml
+# testing
+/coverage
+
+# production
+**/build
+**/dist
+./backend/dist
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
 # Logs
 logs
 *.log
@@ -7,6 +38,48 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
+# react end
+
+# backend  start
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+/node_modules
+node_modules
+scr/node_modules
+dist/node_modules
+/WEB/node_modules
+WEB/node_modules
+
+/.pnp
+.pnp.js
+
+# productionBuild
+
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# backend end
+
+
+# github default
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
@@ -38,10 +111,6 @@ bower_components
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
 
-# Dependency directories
-node_modules/
-jspm_packages/
-
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
@@ -53,6 +122,9 @@ web_modules/
 
 # Optional eslint cache
 .eslintcache
+
+# Optional stylelint cache
+.stylelintcache
 
 # Microbundle cache
 .rpt2_cache/
@@ -69,10 +141,12 @@ web_modules/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
+# dotenv environment variable files
 .env
-.env.test
-.env.production
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -84,7 +158,6 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Gatsby files
 .cache/
@@ -94,6 +167,13 @@ dist
 
 # vuepress build output
 .vuepress/dist
+
+# vuepress v2.x temp and cache directory
+.temp
+.cache
+
+# Docusaurus cache and generated files
+.docusaurus
 
 # Serverless directories
 .serverless/
@@ -117,19 +197,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-.DS_*
-*.log
-logs
-**/*.backup.*
-**/*.back.*
-
-node_modules
-bower_components
-
-*.sublime*
-
-psd
-thumb
-sketch
-
-# End of https://mrkandreev.name/snippets/gitignore-generator/#Node,react
+# Local Netlify folder
+.netlify

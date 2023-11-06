@@ -1,0 +1,8 @@
+use redux toolkit instead of context api
+add unique usernames and and use them as slugs
+
+navbar in router
+
+remove 
+remove github action if not needed
+think of e-learning

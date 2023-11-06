@@ -1,2 +1,3 @@
-# youtube
-A Full-Stack end-to-end YouTube clone 
+# Youtube clone
+
+## A Full-Stack end-to-end YouTube clone

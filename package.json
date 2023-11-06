@@ -1,0 +1,25 @@
+{
+  "name": "youtube-clone",
+  "version": "1.0.0",
+  "description": "A Full-Stack end-to-end YouTube clone ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shehza-d/youtube.git"
+  },
+  "keywords": [
+    "backend",
+    "Javascript",
+    "youtube",
+    "clone"
+  ],
+  "author": "Shehzad Iqbal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shehza-d/youtube/issues"
+  },
+  "homepage": "https://github.com/shehza-d/youtube#readme"
+}

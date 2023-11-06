@@ -5,4 +5,5 @@ navbar in router
 
 remove 
 remove github action if not needed
-think of e-learning
+
+prettier for full stack projects both 

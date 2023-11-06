@@ -4,6 +4,8 @@
 # Ignore artifacts:
 coverage
 
+*.env
+.env
 **/build
 **/.git
 /.git

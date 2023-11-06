@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A Full-Stack end-to-end YouTube clone",
   "scripts": {
-    "format": "cd backend && npx prettier --write . && cd ../frontend && npx prettier --write .",
+    "format": "npx prettier --write .",
     "deploy": "cd backend && tsc && npm run deploy && cd ../frontend && npm run build && npm run deploy"
   },
   "repository": {
@@ -21,6 +21,9 @@
   "bugs": {
     "url": "https://github.com/shehza-d/youtube/issues"
   },
-  "homepage": "https://remove.com/shehza-d/youtube"
-
+  "homepage": "https://remove.com/shehza-d/youtube",
+  "devDependencies": {
+    "prettier": "^3.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.6"
+  }
 }

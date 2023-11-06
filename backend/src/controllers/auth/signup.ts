@@ -1,6 +1,6 @@
 import type { RequestHandler } from "express";
 import { db } from "../../db/index.mjs";
-import { stringToHash } from "bcrypt-inzi";
+import { genSalt, hash } from "bcrypt";
 import { IUser } from "../../types/index.js";
 import { isValid } from "../../helpers/index.js";
 
@@ -51,7 +51,8 @@ export const signupHandler: RequestHandler = async (req, res, next) => {
     }
     // user not found
 
-    const passwordHash = await stringToHash(req.body.password);
+    const salt = await genSalt(10);
+    const passwordHash = await hash(password, salt);
 
     const doc = isDoctor
       ? {

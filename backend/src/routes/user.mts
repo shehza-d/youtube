@@ -1,5 +1,9 @@
 import express from "express";
-import { getUserProfile, getAllDoctors ,checkValidToken} from "../controllers/users.js";
+import {
+  getUserProfile,
+  getAllDoctors,
+  checkValidToken,
+} from "../controllers/users.js";
 
 const router = express.Router();
 

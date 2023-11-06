@@ -5,9 +5,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "surge ./build --domain saylani-devathon-by-shehzad.surge.sh",
+    "deploy": "surge ./build --domain youtube-by-shehzad.surge.sh",
     "format": "npx prettier --write .",
-    
     "done": "npm run build && npm run deploy",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -35,7 +34,6 @@
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "@types/react-stars": "^2.2.1",
-    "prettier-plugin-tailwindcss": "^0.5.6",
     "tailwindcss": "^3.3.3",
     "typescript": "^4.9.5"
   },

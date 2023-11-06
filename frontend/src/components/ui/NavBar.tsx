@@ -7,8 +7,6 @@ import { FiMenu as MenuIcon } from "react-icons/fi";
 import { RxCross1 as CrossIcon } from "react-icons/rx";
 import { useContext, useEffect, useState } from "react";
 
-
-
 const navLinks = [
   { title: "home", link: "/", id: 1 },
   { title: "logout", link: "/logout", id: 2 },
@@ -56,7 +54,7 @@ const navLinks = [
 export default function Navbar() {
   const [open, setOpen] = useState(false); // this open refers to dropdown menu of mobile
   const [showNavbar, setShowNavbar] = useState(false);
-  const pathname = "home"
+  const pathname = "home";
 
   // useEffect(() => {
   //   if (pathname !== "/") {
@@ -83,7 +81,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`relative top-0 z-[102] px-4 w-full ${navColor} shadow-xl ${
+        className={`relative top-0 z-[102] w-full px-4 ${navColor} shadow-xl ${
           showNavbar ? "translate-y-0" : "-translate-y-full"
         } transform drop-shadow-md transition-transform duration-200`}
       >
@@ -129,8 +127,8 @@ export default function Navbar() {
               width={150}
               height={40}
             />
-            <h1 className="text-primary justify-self-center pl-2 text-xl ml:text-2xl font-extrabold">
-             Find Doctor App
+            <h1 className="text-primary justify-self-center pl-2 text-xl font-extrabold ml:text-2xl">
+              Find Doctor App
             </h1>
           </a>
           {/* <input className="text-violet-700 md:block hidden" type="search" placeholder="dfdfd"/> */}

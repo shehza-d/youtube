@@ -19,7 +19,7 @@ app.use(version, tokenVerification);
 app.use(version, crudRouter);
 app.use(version, userProfileRouter);
 
-app.get("/testing", (req, res) => res.send("Devathon server testing"));
+app.get("/testing", (req, res) => res.send("Youtube Clone server testing"));
 
 // app.get("/", express.static(path.join(__dirname, "./public/index.html")));
 app.use((req, res) => res.send("No route matched"));

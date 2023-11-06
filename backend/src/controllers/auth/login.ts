@@ -1,7 +1,7 @@
 import type { RequestHandler } from "express";
 import { db } from "../../db/index.mjs";
 import jwt from "jsonwebtoken";
-import { verifyHash } from "bcrypt-inzi";
+import { compare } from "bcrypt";
 import { IUser } from "../../types/index.js";
 import { SECRET } from "../../config/index.js";
 
@@ -29,7 +29,7 @@ export const loginHandler: RequestHandler = async (req, res, next) => {
     }
     // user found
 
-    const isMatch = await verifyHash(password, user.password);
+    const isMatch = await compare(password, user.password);
 
     if (!isMatch) {
       res.status(401).send({ message: "Incorrect email or password!" });

@@ -21,6 +21,9 @@
   "bugs": {
     "url": "https://github.com/shehza-d/youtube/issues"
   },
-  "homepage": "https://remove.com/shehza-d/youtube"
-
+  "homepage": "https://remove.com/shehza-d/youtube",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }

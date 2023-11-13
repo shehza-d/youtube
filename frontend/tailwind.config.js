@@ -13,6 +13,10 @@ module.exports = {
         xl: "1440px",
         "2xl": "2560px",
       },
+      // not sure about adding fallback for dvh like this
+      height: {
+        screen: ["100vh /* fallback for Opera, IE and etc. */", "100dvh"],
+      },
       colors: {
         accent: "var(--accent-color)",
         accentLow: "var(--accent-low-op)",

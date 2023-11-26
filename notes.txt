@@ -7,3 +7,5 @@ remove
 remove github action if not needed
 
 prettier for full stack projects both 
+
+https://github.com/sqids/sqids-javascript

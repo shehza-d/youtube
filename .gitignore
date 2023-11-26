@@ -19,6 +19,7 @@ jspm_packages/
 ./backend/dist
 
 # misc
+**/.DS_Store
 .DS_Store
 .env.local
 .env.development.local

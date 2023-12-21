@@ -1,5 +1,10 @@
 class ApiResponse {
-  constructor(statusCode, data, message = "Success") {
+  readonly statusCode: number;
+  readonly data: object | null;
+  readonly success: boolean;
+  readonly message: string;
+
+  constructor(statusCode: number, data: object, message = "Success") {
     this.statusCode = statusCode;
     this.data = data;
     this.message = message;

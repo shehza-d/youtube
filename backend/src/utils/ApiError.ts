@@ -1,6 +1,11 @@
 class ApiError extends Error {
+  readonly statusCode: number;
+  readonly data: object | null;
+  readonly success: boolean;
+  readonly errors: unknown[];
+
   constructor(
-    statusCode,
+    statusCode: number,
     message = "Something went wrong!🤷‍♂️",
     errors = [],
     stack = ""
@@ -12,11 +17,8 @@ class ApiError extends Error {
     this.success = false;
     this.errors = errors;
 
-    if (stack) {
-      this.stack = stack;
-    } else {
-      Error.captureStackTrace(this, this.constructor);
-    }
+    if (stack) this.stack = stack;
+    else Error.captureStackTrace(this, this.constructor);
   }
 }
 

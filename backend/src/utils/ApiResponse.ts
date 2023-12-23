@@ -1,4 +1,4 @@
-class ApiResponse {
+export class ApiResponse {
   readonly statusCode: number;
   readonly data: object | null;
   readonly success: boolean;

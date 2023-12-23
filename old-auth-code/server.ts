@@ -1,8 +1,8 @@
 import express from "express";
-import { PORT } from "./config/index.js";
+import { PORT } from "../backend/src/config/index.js";
 import { middlewareRouter } from "./middleware/index.mjs";
-import { userProfileRouter, crudRouter, authRouter } from "./routes/index.js";
-import { tokenVerification } from "./middleware/tokenVerification.js";
+import { userProfileRouter, crudRouter, authRouter } from "../backend/src/routes/index.js";
+import { tokenVerification } from "../backend/src/middleware/tokenVerification.js";
 
 const app = express();
 const version = "/api/v1";

@@ -1,16 +1,22 @@
 import multer from "multer";
 
+// multer's disk storage settings
 const storageConfig = multer.diskStorage({
   destination: "./public/temp",
 
   filename: (req, file, cb) => {
     console.log("multer-file: ", file);
 
-    cb(null, `shehzad-${file.originalname}-${new Date().getTime()}`); //remove shehzad in file name
+    cb(null, `shehzad-${new Date().getTime()}-${file.originalname}`); //remove shehzad in file name
   },
 });
 
-export const upload = multer({ storage: storageConfig });
+// multer's settings
+export const upload = multer({
+  storage: storageConfig,
+  limits: { fileSize: 3500 * 3500 },
+  // onFileUploadStart
+});
 
 // new syntax ==== const upload =multer({ dest: './public/data/upload/'})
 // https://www.npmjs.com/package/multer#diskstorage

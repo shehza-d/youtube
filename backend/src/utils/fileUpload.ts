@@ -19,19 +19,20 @@ const uploadFile = async (localFilePath: string) => {
 
     // upload the file on cloudinary
     const response = await cloudinary.uploader.upload(localFilePath, {
-      resource_type: "auto",
+      resource_type: "image",
+      folder: "youtube-clone",
     });
 
     // file has been uploaded successfully
     console.log("file is uploaded on cloudinary ", response); // remove
 
-    fs.unlinkSync(localFilePath);
-
     return response.url;
-  } catch (error) {
-    fs.unlinkSync(localFilePath); // remove the locally saved temporary file as the upload operation got failed
+  } catch (err) {
+    console.log("🚀 ~ file: fileUpload.ts:33 ~ uploadFile ~ err:", err);
 
     return null;
+  } finally {
+    fs.unlinkSync(localFilePath); // remove the locally saved temporary file as the upload operation got failed
   }
 };
 

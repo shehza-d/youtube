@@ -4,6 +4,10 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadFile } from "../utils/fileUpload.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
+import { generateAccessAndRefreshTokens } from "../utils/generateTokens.js";
+import { REFRESH_TOKEN_SECRET } from "../config/index.js";
+
+const cookieOptions = { httpOnly: true, secure: true };
 
 const registerUser = asyncHandler(async (req, res) => {
   const { fullName, email, userName, password } = req.body;
@@ -29,7 +33,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const coverImageLocalPath = files?.coverImage?.length
     ? files.coverImage[0].path
     : "";
- 
+
   if (!avatarLocalPath) throw new ApiError(400, "Avatar file is required 1");
 
   const avatar = await uploadFile(avatarLocalPath);
@@ -58,4 +62,79 @@ const registerUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, createdUser, "User registered Successfully"));
 });
 
-export { registerUser };
+const loginUser = asyncHandler(async (req, res) => {
+  const { email, userName, password } = req.body;
+
+  if (!(userName || email))
+    throw new ApiError(400, "Username or email is required");
+
+  const user = await User.findOne({ $or: [{ userName }, { email }] });
+
+  if (!user) throw new ApiError(404, "User does not exist");
+
+  const isPasswordValid = await user.isPasswordCorrect(password);
+
+  if (!isPasswordValid) throw new ApiError(401, "Invalid user credentials");
+
+  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
+    user._id
+  );
+
+  const loggedInUser = { ...user?._doc, refreshToken };
+
+  delete loggedInUser.password;
+
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, cookieOptions)
+    .cookie("refreshToken", refreshToken, cookieOptions)
+    .json(new ApiResponse(200, loggedInUser, "User logged In Successfully"));
+});
+
+const logoutUser = asyncHandler(async (req, res) => {
+  await User.findByIdAndUpdate(
+    req.body.user._id,
+    { $set: { refreshToken: null } },
+    { new: true }
+  );
+
+  return res
+    .status(200)
+    .clearCookie("accessToken", cookieOptions)
+    .clearCookie("refreshToken", cookieOptions)
+    .json(new ApiResponse(200, {}, "User logged Out"));
+});
+
+const refreshAccessToken = asyncHandler(async (req, res) => {
+  const incomingRefreshToken =
+    req.cookies.refreshToken || req.body.refreshToken;
+
+  if (!incomingRefreshToken) throw new ApiError(401, "Unauthorized request");
+
+  const decodedToken = jwt.verify(incomingRefreshToken, REFRESH_TOKEN_SECRET);
+
+  const user = await User.findById(decodedToken?._id);
+
+  if (!user) throw new ApiError(401, "Invalid refresh token");
+
+  if (incomingRefreshToken !== user?.refreshToken)
+    throw new ApiError(401, "Refresh token is expired");
+
+  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
+    user._id
+  );
+
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, cookieOptions)
+    .cookie("refreshToken", refreshToken, cookieOptions)
+    .json(
+      new ApiResponse(
+        200,
+        { accessToken, refreshToken },
+        "Access token refreshed"
+      )
+    );
+});
+
+export { registerUser, loginUser, logoutUser, refreshAccessToken };

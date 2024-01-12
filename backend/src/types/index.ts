@@ -1,31 +1,50 @@
-import type { ObjectId } from "mongodb";
+// import type { ObjectId } from "mongodb";
+import type { Types, Model } from "mongoose";
+
+export interface IAccessTokenPayload {
+  _id: string;
+  email: string;
+  userName: string;
+  fullName: string;
+}
+
+export interface IRefreshTokenPayload {
+  _id: string;
+}
 
 export interface IUser {
-  // _id?: ObjectId;
-  createdOn: Date;
-  name: string;
+  userName: string;
   email: string;
+  fullName: string;
+  avatar: string;
+  coverImage?: string;
+  watchHistory: Types.ObjectId[];
   password: string;
-  isDoctor: boolean; // Patient or Doctor
-  organization?: string; // doc only
-  experience?: number; // doc only
-  specialization?: string; // doc only
-  // timing:'5 10'
+  refreshToken: string;
 }
 
-export interface IAppointment {
-  // _id: ObjectId; // Appointment id
-  doctorId: ObjectId;
-  patientId: ObjectId;
-  from: 4;
-  till: Date;
+// For user.model Methods
+// Put all user instance methods in this interface:
+interface IUserMethods {
+  isPasswordCorrect(password: string): Promise<boolean>;
+  generateAccessToken(): string;
+  generateRefreshToken(): string;
+}
+// Create a new Model type that knows about IUserMethods...
+export type IUserModel = Model<IUser, {}, IUserMethods>;
+
+export interface ISubscription {
+  subscriber: Types.ObjectId;
+  channel: Types.ObjectId;
 }
 
-export interface IReview {
-  _id: ObjectId; // review id
-  doctorId: ObjectId;
-  patientId: ObjectId;
-  createdOn: Date;
-  review: string;
-  rating: number;
+export interface IVideo {
+  videoFile: string;
+  thumbnail: string;
+  title: string;
+  description: string;
+  duration: number;
+  views: number;
+  isPublished: boolean;
+  owner: Types.ObjectId;
 }

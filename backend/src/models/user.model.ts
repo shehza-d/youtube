@@ -7,6 +7,7 @@ import {
   REFRESH_TOKEN_EXPIRY,
   REFRESH_TOKEN_SECRET,
 } from "../config/index.js";
+import { IUser, IUserModel } from "../types/index.js";
 
 const userSchema = new Schema(
   {
@@ -90,4 +91,4 @@ userSchema.methods.generateRefreshToken = function () {
   });
 };
 
-export const User = mongoose.model("User", userSchema);
+export const User = mongoose.model<IUser, IUserModel>("User", userSchema);

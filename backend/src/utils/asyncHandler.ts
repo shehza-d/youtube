@@ -3,13 +3,13 @@ import { ApiError } from "./ApiError.js";
 
 // Higher Order function
 const asyncHandler = (requestHandler: RequestHandler): RequestHandler => {
-  try {
-    return (req, res, next) => {
-      Promise.resolve(requestHandler(req, res, next)).catch((err) => next(err));
-    };
-  } catch (err: any) {
-    throw new ApiError(500, err?.message || "Something went wrong!🤷‍♂️");
-  }
+  // try {
+  return (req, res, next) => {
+    Promise.resolve(requestHandler(req, res, next)).catch((err) => next(err));
+  };
+  // } catch (err: any) {
+  //   throw new ApiError(500, err?.message || "Something wentt wrong!🤷‍♂️");// test this
+  // }
 };
 
 export { asyncHandler };

@@ -1,6 +1,7 @@
+// old code
 import jwt from "jsonwebtoken";
 import type { RequestHandler } from "express";
-import { SECRET } from "../config/index.js";
+import { SECRET } from "../backend/src/config/index.js";
 
 interface IJwtPayload {
   id: string;

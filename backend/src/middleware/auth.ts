@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ACCESS_TOKEN_SECRET } from "../config/index.js";
+import { IAccessTokenPayload } from "../types/index.js";
 
 export const verifyJWT = asyncHandler(async (req, _, next) => {
   try {
@@ -15,13 +16,15 @@ export const verifyJWT = asyncHandler(async (req, _, next) => {
         "Unauthorized request! Include http-only credential"
       );
 
-    const decodedData = jwt.verify(accessToken, ACCESS_TOKEN_SECRET);
+    const decodedData = jwt.verify(
+      accessToken,
+      ACCESS_TOKEN_SECRET
+    ) as IAccessTokenPayload;
 
-    req.body.user = decodedData;
+    req.verifiedUser = decodedData;
 
     next();
   } catch (err: any) {
-
     console.log("🚀 ~ file: auth.ts:24 ~ verifyJWT ~ err:", err);
     throw new ApiError(401, err?.message || "Invalid Token");
   }

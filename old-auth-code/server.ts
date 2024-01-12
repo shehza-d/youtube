@@ -1,7 +1,11 @@
 import express from "express";
 import { PORT } from "../backend/src/config/index.js";
 import { middlewareRouter } from "./middleware/index.mjs";
-import { userProfileRouter, crudRouter, authRouter } from "../backend/src/routes/index.js";
+import {
+  userProfileRouter,
+  crudRouter,
+  authRouter,
+} from "../backend/src/routes/index.js";
 import { tokenVerification } from "../backend/src/middleware/tokenVerification.js";
 
 const app = express();

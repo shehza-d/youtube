@@ -1,21 +1,4 @@
-import express from "express";
-import cors from "cors";
-import cookieParser from "cookie-parser";
+import { upload } from "../middleware/multer.js";
+import { verifyJWT } from "../middleware/auth.js";
 
-const router = express.Router();
-
-//middleware configuration
-
-router.use(express.json());
-router.use(cookieParser());
-
-// router.use(tokenVerification)
-
-router.use(
-  cors({
-    origin: ["http://localhost:3000", "https://localhost:3003", "*"],
-    credentials: true,
-  })
-);
-
-export { router as middlewareRouter };
+export { upload, verifyJWT };

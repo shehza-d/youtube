@@ -11,3 +11,6 @@ prettier for full stack projects both
 https://github.com/sqids/sqids-javascript
 
 zod validation for input
+
+Upload image and video on s3
+host server on aws or (video 2 digital ocean)

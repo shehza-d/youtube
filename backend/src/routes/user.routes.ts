@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { upload, verifyJWT } from "../middleware/index.js";
 import {
   registerUser,
   loginUser,
@@ -10,8 +11,6 @@ import {
   updateUserAvatar,
   updateUserCoverImage,
 } from "../controllers/user.controller.js";
-import { upload } from "../middleware/multer.js";
-import { verifyJWT } from "../middleware/auth.js";
 
 const router = Router();
 
@@ -37,7 +36,7 @@ router
   .patch(verifyJWT, upload.single("avatar"), updateUserAvatar);
 router
   .route("/cover-image")
-  .patch(verifyJWT, upload.single("/coverImage"), updateUserCoverImage);
+  .patch(verifyJWT, upload.single("coverImage"), updateUserCoverImage);
 
 // router.route("/c/:username").get(verifyJWT, getUserChannelProfile)
 // router.route("/history").get(verifyJWT, getWatchHistory)

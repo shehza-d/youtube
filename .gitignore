@@ -9,6 +9,8 @@ jspm_packages/
 /.pnp
 .pnp.js
 
+youtube-instance-login-key.pem
+
 **/app.yaml
 # testing
 /coverage

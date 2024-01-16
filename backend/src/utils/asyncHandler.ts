@@ -1,6 +1,8 @@
 import { type RequestHandler } from "express";
 import { ApiError } from "./ApiError.js";
 
+// with this we don't have to use try catch in every async function or controller
+
 // Higher Order function
 const asyncHandler = (requestHandler: RequestHandler): RequestHandler => {
   // try {

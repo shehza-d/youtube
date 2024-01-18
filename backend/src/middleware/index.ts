@@ -1,4 +1,4 @@
-import { upload } from "../middleware/multer.js";
-import { verifyJWT } from "../middleware/auth.js";
+import { upload } from "./multer.middleware.js";
+import { verifyJWT } from "./auth.middleware.js";
 
 export { upload, verifyJWT };

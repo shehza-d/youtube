@@ -15,4 +15,3 @@ This project is a complex project that is built with nodejs, expressjs, mongodb,
 Project uses all standard practices like JWT, Bcrypt, Access tokens, Refresh tokens and many more.
 
 Aggregation
-

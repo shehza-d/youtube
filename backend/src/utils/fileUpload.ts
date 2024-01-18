@@ -7,6 +7,14 @@ import {
   CLOUDINARY_API_SECRET,
 } from "../config/index.js";
 
+type Folder =
+  | "thumbnails"
+  | "videos"
+  | "avatars"
+  | "banners"
+  | "post-images"
+  | (string & object);
+
 cloudinary.config({
   cloud_name: CLOUDINARY_CLOUD_NAME,
   api_key: CLOUDINARY_API_KEY,

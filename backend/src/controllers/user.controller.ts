@@ -1,15 +1,14 @@
+import fs from "node:fs";
+import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 import { User } from "../models/user.model.js";
 import { ApiError, ApiResponse } from "../utils/index.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadFile } from "../utils/fileUpload.js";
-import jwt from "jsonwebtoken";
-// import mongoose from "mongoose";
 import { generateAccessAndRefreshTokens } from "../utils/generateTokens.js";
 import { REFRESH_TOKEN_SECRET } from "../config/index.js";
+import { cookieOptions } from "../config/constants.js";
 import { IAccessTokenPayload, IUser } from "../types/index.js";
-import mongoose from "mongoose";
-
-const cookieOptions = { httpOnly: true, secure: true };
 
 // Register of Sign-up
 const registerUser = asyncHandler(async (req, res) => {
@@ -29,13 +28,16 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const existedUser = await User.findOne({ $or: [{ userName }, { email }] });
 
-  if (existedUser)
-    throw new ApiError(409, "User with same email or username already exists");
-
   const avatarLocalPath = files?.avatar[0]?.path;
   const coverImageLocalPath = files?.coverImage?.length
     ? files.coverImage[0].path
     : "";
+
+  if (existedUser) {
+    fs.unlinkSync(avatarLocalPath);
+    fs.unlinkSync(coverImageLocalPath);
+    throw new ApiError(409, "User with same email or username already exists");
+  }
 
   if (!avatarLocalPath) throw new ApiError(400, "Avatar file is required 1");
 

@@ -12,6 +12,7 @@ export interface IRefreshTokenPayload {
   _id: string;
 }
 
+// if these types are not being used anywhere else  move it to relevent.model.ts
 export interface IUser {
   userName: string;
   email: string;
@@ -28,7 +29,7 @@ export interface IUser {
 interface IUserMethods {
   isPasswordCorrect(password: string): Promise<boolean>;
   generateAccessToken(): string;
-  generateRefreshToken(): string;
+  generateRefreshToken: () => string; //c
 }
 // Create a new Model type that knows about IUserMethods...
 export type IUserModel = Model<IUser, {}, IUserMethods>;
@@ -47,4 +48,29 @@ export interface IVideo {
   views: number;
   isPublished: boolean;
   owner: Types.ObjectId;
+}
+
+export interface ILike {
+  video?: Types.ObjectId;
+  comment?: Types.ObjectId;
+  tweet?: Types.ObjectId;
+  likedBy: Types.ObjectId;
+}
+
+export interface IComment {
+  content: string;
+  video: Types.ObjectId;
+  owner: Types.ObjectId;
+}
+
+export interface ITweet {
+  content: string;
+  owner: Types.ObjectId;
+}
+
+export interface IPlaylist {
+  name: string;
+  description?: string;
+  owner: Types.ObjectId;
+  videos: Types.ObjectId[];
 }

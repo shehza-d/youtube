@@ -15,10 +15,13 @@ zod validation for input
 Upload image and video on s3
 host server on aws or (video 2 digital ocean)
 
+make youtube pwa and offline 
+
 <!-- docker -->
 
 try destructuring Types.ObjectId
 
-
+https://github.com/saheemshafi/void-videos
 https://github.com/malik991/BackendWithjavaScript
 https://github.com/YashR25/Youtube-Backend
+https://github.com/GmKandhro/youtube-clone-backend

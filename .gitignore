@@ -1,6 +1,12 @@
 # react start
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Elastic Beanstalk Files
+**/.elasticbeanstalk/*
+backend/.elasticbeanstalk/config.yml
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
 # Dependency directories
 /node_modules
 node_modules/

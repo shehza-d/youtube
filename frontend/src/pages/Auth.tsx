@@ -6,8 +6,8 @@ import SignupForm from "../components/auth/Signup";
 
 export default function AuthPage({ type }: { type: "login" | "signup" }) {
   return (
-    <div>
-      AuthPage {type}
+    <div className="h-screen overflow-y-auto bg-[#121212] text-white">
+      {/* AuthPage {type} */}
       {type === "login" ? <LoginForm /> : <SignupForm />}
       <br />
       <br />

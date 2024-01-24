@@ -1,6 +1,8 @@
 // npm i dotenv
 import "dotenv/config";
 
+export const APP_NAME = "Youtube";
+
 const PORT = process.env.PORT || 3003;
 const DB_NAME = process.env.DB_NAME || "";
 const DB_USERNAME = process.env.DB_USERNAME || "";

@@ -1,5 +1,7 @@
 // https://github.com/ahadsts9901/social-media-app/blob/main/web/public/sw.js
 
+// this file should be named sw.js
+
 const CACHE = "pwabuilder-offline";
 
 importScripts(

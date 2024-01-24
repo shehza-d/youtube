@@ -7,10 +7,10 @@ import NavBar from "../components/ui/NavBar";
 import useCheckLoginStatus from "../hooks/useCheckLoginStatus";
 
 export default function AppRouter() {
-  // const { state, dispatch } = useContext(GlobalContext);
+  const { state, dispatch } = useContext(GlobalContext);
 
   useCheckLoginStatus();
-  const [state, setTesting] = useState<any>({ isLogin: false });
+  // const [state, setTesting] = useState<any>({ isLogin: false });
   const { isLogin } = state;
 
   console.log("🚀 ~ file: AppRouter.tsx:12 ~ AppRouter ~ isLogin:", isLogin);

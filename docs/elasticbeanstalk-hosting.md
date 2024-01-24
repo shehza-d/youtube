@@ -16,8 +16,7 @@
 
 https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/configuring-https-httpredirect.html
 
-https://repost.aws/knowledge-center/elastic-beanstalk-https-configuration
----
+## https://repost.aws/knowledge-center/elastic-beanstalk-https-configuration
 
 eb init
 initializes your local directory for use with Elastic Beanstalk. It sets default values and configuration for applications created with EB CLI.

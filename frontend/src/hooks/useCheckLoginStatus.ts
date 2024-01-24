@@ -48,14 +48,17 @@ export default function useCheckLoginStatus() {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const { data } = await axios.get(`${getUrl()}/api/v1/profile`, {
-          withCredentials: true,
-          headers: {
-            "Cache-Control": "no-cache",
-            Pragma: "no-cache",
-            Expires: "0",
+        const { data } = await axios.get(
+          `${getUrl()}/api/v1/users/current-user`,
+          {
+            withCredentials: true,
+            headers: {
+              "Cache-Control": "no-cache",
+              Pragma: "no-cache",
+              Expires: "0",
+            },
           },
-        });
+        );
 
         console.log("🚀 ~ file: useCheckLoginStatus.ts:29 ~ ~ data:", data);
 

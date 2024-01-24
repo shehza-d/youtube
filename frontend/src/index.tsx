@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import { Toaster } from "react-hot-toast"; // https://react-hot-toast.com/docs
+import ContextProvider from "./context/index";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -13,10 +13,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      {/* <ContextProvider> Redux*/}
-      <App />
-      <Toaster /> {/* Toaster is being used for notifications */}
-      {/* </ContextProvider> */}
+      <ContextProvider>
+        {/* Redux */}
+        <App />
+      </ContextProvider>
     </BrowserRouter>
   </React.StrictMode>,
 );

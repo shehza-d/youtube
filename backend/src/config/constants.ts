@@ -1,27 +1,42 @@
 import { type CookieOptions } from "express";
 
-export const DB_NAME = "***";
-export const APP_NAME = "My Youtube";
-
 export const STATUS_CODES = {
+  // Information
   CONTINUE: 100,
   SWITCHING_PROTOCOLS: 101,
+  PROCESSING: 102,
+
+  // Success
   OK: 200,
   CREATED: 201,
+  ACCEPTED: 202,
   NO_CONTENT: 204,
+
+  // Redirect
   MOVED_PERMANENTLY: 301,
   FOUND: 302,
   NOT_MODIFIED: 304,
+  TEMPORARY_REDIRECT: 307,
+  PERMANENTLY_REDIRECT: 307,
+
+  // Client Error
   BAD_REQUEST: 400,
   UNAUTHORIZED: 401,
-  UNPROCESSABLE_ENTITY: 422,
+  FORBIDDEN: 403,
   NOT_FOUND: 404,
-  INTERNAL_SERVER_ERROR: 500,
-  SERVICE_UNAVAILABLE: 503,
   CONFLICT: 409,
+  UNPROCESSABLE_ENTITY: 422,
+
+  // Server Error
+  INTERNAL_SERVER_ERROR: 500,
+  NOT_IMPLEMENTED: 501,
+  BAD_GATEWAY: 502,
+  SERVICE_UNAVAILABLE: 503,
+  GATEWAY_TIMEOUT: 504,
 } as const;
 
-export type STATUS_CODES_TYPE = typeof STATUS_CODES;
+type TStatusCodes = typeof STATUS_CODES;
+export type STATUS_CODES_TYPE = TStatusCodes[keyof TStatusCodes];
 
 export const cookieOptions: CookieOptions = {
   httpOnly: true,

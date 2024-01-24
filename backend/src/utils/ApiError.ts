@@ -1,11 +1,13 @@
+import { type STATUS_CODES_TYPE } from "../config/constants.js";
+
 class ApiError extends Error {
-  readonly statusCode: number;
+  readonly statusCode: STATUS_CODES_TYPE;
   readonly data: object | null;
   readonly success: boolean;
   readonly errors: unknown[];
 
   constructor(
-    statusCode: number,
+    statusCode: STATUS_CODES_TYPE,
     message = "Something went wrong!🤷‍♂️",
     errors = [],
     stack = ""

@@ -19,9 +19,17 @@ make youtube pwa and offline
 
 <!-- docker -->
 
+redux auth guard => https://github.com/TahirahRoohi271/redux/blob/main/src/store/authSlice.js
+redux async thunk??
+
 try destructuring Types.ObjectId
 
 https://github.com/saheemshafi/void-videos
+https://github.com/saheemshafi/void-video
 https://github.com/malik991/BackendWithjavaScript
 https://github.com/YashR25/Youtube-Backend
 https://github.com/GmKandhro/youtube-clone-backend
+
+
+Your code not only needs to work, it also has to be fast, reliable, secure, accessible, scalable, comprehensible to your teammates (and future you), operational with your teammates' code and all the third-party and internal systems it interacts with.
+

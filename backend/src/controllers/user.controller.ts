@@ -44,21 +44,19 @@ const registerUser = asyncHandler(async (req, res) => {
     );
   }
 
-  if (!avatarLocalPath)
-    throw new ApiError(STATUS_CODES.BAD_REQUEST, "Avatar file is required 1");
-
   const avatar = await uploadFile(avatarLocalPath);
   console.log("🚀 ~ registerUser ~ avatar:", avatar);
-  const coverImage = await uploadFile(coverImageLocalPath);
-  console.log("🚀 ~ registerUser ~ coverImage:", coverImage);
 
   if (!avatar)
     throw new ApiError(STATUS_CODES.BAD_REQUEST, "Avatar file is required 2"); //testing 2
 
+  const coverImage = await uploadFile(coverImageLocalPath);
+  console.log("🚀 ~ registerUser ~ coverImage:", coverImage);
+
   const userDoc = {
     fullName,
-    avatar,
-    coverImage: coverImage || "",
+    avatar: avatar.url,
+    coverImage: coverImage?.avatar || "",
     email: email.toLowerCase(),
     password,
     userName: userName.toLowerCase(),
@@ -88,7 +86,6 @@ const registerUser = asyncHandler(async (req, res) => {
     );
 });
 
-// testing what is being returned
 const loginUser = asyncHandler(async (req, res) => {
   const { email, userName, password } = req.body;
 
@@ -99,7 +96,7 @@ const loginUser = asyncHandler(async (req, res) => {
     );
 
   const user = await User.findOne({ $or: [{ userName }, { email }] });
-  //.select('-password')
+
   if (!user) throw new ApiError(STATUS_CODES.NOT_FOUND, "User does not exist");
 
   const isPasswordValid = await user.isPasswordCorrect(password);
@@ -267,7 +264,7 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
 
   const user = await User.findByIdAndUpdate(
     req.verifiedUser._id,
-    { $set: { avatar } },
+    { $set: { avatar: avatar.url } },
     { new: true }
   ).select("-password");
 
@@ -303,7 +300,7 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
 
   const user = await User.findByIdAndUpdate(
     req.verifiedUser?._id,
-    { $set: { coverImage } },
+    { $set: { coverImage: coverImage.url } },
     { new: true }
   ).select("-password");
 
@@ -326,7 +323,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
 
   const channel = await User.aggregate([
     {
-      $match: { username: username.toLowerCase() },
+      $match: { userName: username.toLowerCase() },
     },
     {
       $lookup: {

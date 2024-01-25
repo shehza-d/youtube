@@ -3,7 +3,7 @@ import {
   deleteVideo,
   getAllVideos,
   getVideoById,
-  publishAVideo,
+  uploadVideo,
   togglePublishStatus,
   updateVideo,
 } from "../controllers/video.controller.js";
@@ -15,18 +15,19 @@ router.use(verifyJWT); // Apply verifyJWT middleware to all routes in this file
 
 router
   .route("/")
-  .get(getAllVideos)
+  .get(getAllVideos) // left
   .post(
+    // done
     upload.fields([
       { name: "videoFile", maxCount: 1 },
       { name: "thumbnail", maxCount: 1 },
     ]),
-    publishAVideo
+    uploadVideo
   );
 
 router
   .route("/:videoId")
-  .get(getVideoById)
+  .get(getVideoById) // done
   .delete(deleteVideo)
   .patch(upload.single("thumbnail"), updateVideo);
 

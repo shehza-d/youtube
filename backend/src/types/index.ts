@@ -41,9 +41,9 @@ export interface ISubscription {
 
 export interface IVideo {
   videoFile: string;
-  thumbnail: string;
+  thumbnail?: string;
   title: string;
-  description: string;
+  description?: string;
   duration: number;
   views: number;
   isPublished: boolean;

@@ -1,8 +1,8 @@
 <p align="center" href="https://www.youtube.com/@shehza-d"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg" alt="YouTube" height="130" width="120" /></p>
 
-# Youtube clone
+<h1 align="center">Youtube clone</h1>
 
-## A Full-Stack end-to-end YouTube clone
+## `A fully integrated YouTube clone with end-to-end full-stack capabilities.`
 
 <p align="center">
 <img src="https://skillicons.dev/icons?i=ts,aws,express,mongodb,react,tailwind,redux" />
@@ -14,4 +14,4 @@ This project is a complex project that is built with nodejs, expressjs, mongodb,
 
 Project uses all standard practices like JWT, Bcrypt, Access tokens, Refresh tokens and many more.
 
-Aggregation
+<!-- Aggregation -->

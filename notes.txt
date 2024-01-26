@@ -33,3 +33,4 @@ https://github.com/GmKandhro/youtube-clone-backend
 
 Your code not only needs to work, it also has to be fast, reliable, secure, accessible, scalable, comprehensible to your teammates (and future you), operational with your teammates' code and all the third-party and internal systems it interacts with.
 
+const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/; // testing left

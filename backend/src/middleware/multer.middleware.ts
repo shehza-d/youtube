@@ -4,8 +4,8 @@ import multer from "multer";
 const storageConfig = multer.diskStorage({
   destination: "./public/temp",
 
-  filename: (req, file, cb) => {
-    console.log("multer-file: ", file);
+  filename: (_, file, cb) => {
+    console.log("🚀 ~ multer-file:", file);
 
     cb(null, `shehzad-${new Date().getTime()}-${file.originalname}`); //remove shehzad in file name
   },
@@ -14,7 +14,7 @@ const storageConfig = multer.diskStorage({
 // multer's settings
 export const upload = multer({
   storage: storageConfig,
-  limits: { fileSize: 3500 * 3500 },
+  // limits: { fileSize: 3500 * 3500 },
   // onFileUploadStart
 });
 

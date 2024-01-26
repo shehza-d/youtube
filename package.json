@@ -4,7 +4,7 @@
   "description": "A Full-Stack end-to-end YouTube clone",
   "scripts": {
     "format": "npx prettier --write .",
-    "deploy": "cd backend && tsc && npm run deploy && cd ../frontend && npm run build && npm run deploy"
+    "prod": "cd backend && npm run build && npm run deploy && cd ../frontend && npm run build && npm run deploy"
   },
   "repository": {
     "type": "git",

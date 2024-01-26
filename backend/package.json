@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node dist/index.js",
+    "build": "tsc",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
     "deploy": "gcloud app deploy",
     "zip": "git archive -v -o app.zip --format=zip HEAD",

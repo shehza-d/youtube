@@ -25,6 +25,17 @@ export const verifyJWT = asyncHandler(async (req, _, next) => {
 
     next();
   } catch (err: any) {
+
+    // res
+    // .cookie("myToken", "", {
+    //   maxAge: 1,
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: "none",
+    // })
+    // .status(401)
+    // .send({ message: "Invalid token!" });
+
     console.log("🚀 ~ file: auth.ts:24 ~ verifyJWT ~ err:", err);
     throw new ApiError(401, err?.message || "Invalid Token");
   }

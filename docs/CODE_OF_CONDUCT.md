@@ -4,7 +4,7 @@
 
 Consider these features based on the specific needs and goals of your project, and prioritize them according to your resources and timeline. Regularly gather feedback from users to guide your feature development and improvements.
 
-<!-- 
+<!--
 The AWS Projects repository aims to provide a welcoming and inclusive environment for all contributors. We expect all participants to adhere to the following code of conduct. By participating in this repository, you agree to follow these guidelines and contribute to creating a positive and respectful community.
 
 ## **1. Be Respectful and Inclusive**

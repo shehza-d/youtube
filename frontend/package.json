@@ -10,10 +10,12 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@reduxjs/toolkit": "^2.0.1",
     "axios": "^1.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.49.3",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.11.0",
     "react-redux": "^9.1.0",

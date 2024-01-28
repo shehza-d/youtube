@@ -7,7 +7,7 @@ const tweetSchema = new Schema(
 
     owner: { type: Schema.ObjectId, ref: "User" },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const Tweet = model<ITweet>("Tweet", tweetSchema);

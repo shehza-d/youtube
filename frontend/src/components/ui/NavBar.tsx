@@ -103,7 +103,7 @@ export default function Navbar() {
             {/* mobile nav links */}
             {navLinks.map((item) => (
               <a
-                className={`border-primary border-b py-5 text-lg capitalize ${
+                className={`border-b border-primary py-5 text-lg capitalize ${
                   pathname === item.link ? "text-primary" : ""
                 } text-center`}
                 href={item.link}
@@ -127,7 +127,7 @@ export default function Navbar() {
               width={150}
               height={40}
             />
-            <h1 className="text-primary justify-self-center pl-2 text-xl font-extrabold ml:text-2xl">
+            <h1 className="justify-self-center pl-2 text-xl font-extrabold text-primary ml:text-2xl">
               Find Doctor App
             </h1>
           </a>
@@ -152,7 +152,7 @@ export default function Navbar() {
             <div className={`block justify-self-end ${open && "opacity-0"}`}>
               <MenuIcon
                 size={24}
-                className={`text-primary h-8 w-8`}
+                className={`h-8 w-8 text-primary`}
                 onClick={() => setOpen(true)}
               />
             </div>

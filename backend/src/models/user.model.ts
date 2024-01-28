@@ -55,7 +55,7 @@ const userSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 // Pre middleware functions (hook) are executed one after another, when each middleware calls next.
@@ -81,7 +81,7 @@ userSchema.methods.generateAccessToken = function () {
       fullName: this.fullName,
     },
     ACCESS_TOKEN_SECRET,
-    { expiresIn: ACCESS_TOKEN_EXPIRY }
+    { expiresIn: ACCESS_TOKEN_EXPIRY },
   );
 };
 

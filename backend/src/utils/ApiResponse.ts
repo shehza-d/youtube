@@ -9,7 +9,7 @@ export class ApiResponse {
   constructor(
     statusCode: STATUS_CODES_TYPE,
     data: object | null,
-    message = "Success"
+    message = "Success",
   ) {
     this.statusCode = statusCode;
     this.data = data;

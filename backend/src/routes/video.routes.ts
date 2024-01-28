@@ -22,7 +22,7 @@ router
       { name: "videoFile", maxCount: 1 },
       { name: "thumbnail", maxCount: 1 },
     ]),
-    uploadVideo
+    uploadVideo,
   );
 
 router

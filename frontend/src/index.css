@@ -7,3 +7,39 @@
 * {
   font-family: "Outfit", sans-serif;
 }
+
+:root {
+  --primary-color: #aa11f7;
+}
+
+/* @layer utilities {
+  * {
+    @apply selection:bg-primary selection:text-black;
+  }
+  .spacing-x {
+    @apply mx-6 mm:mx-10 md:mx-16 lg:mx-20 xl:mx-28;
+  }
+  .gradient {
+    @apply to-primary bg-gradient-to-r from-blue-300 via-green-500 bg-clip-text text-transparent;
+  }
+  .S_Underline {
+    @apply after:absolute after:-bottom-1 after:left-0 after:h-[0.1875rem] after:w-0 after:bg-slate-800 after:transition-all after:duration-500 after:content-[''];
+  }
+} */
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* remove */
+.bdr {
+  border: 2px solid red;
+}
+.bdr2 {
+  border: 2px solid green;
+}
+.bdr3 {
+  border: 2px solid blue;
+}

@@ -3,7 +3,7 @@ import { ApiError } from "./ApiError.js";
 import { type Types } from "mongoose";
 
 export const generateAccessAndRefreshTokens = async (
-  userId: Types.ObjectId
+  userId: Types.ObjectId,
 ) => {
   try {
     const user = await User.findById(userId);

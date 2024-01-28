@@ -16,74 +16,80 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const files = req.files as { [fieldname: string]: Express.Multer.File[] };
 
-  if (
-    [fullName, email, userName, password].some(
-      (field) => field?.trim() === "" || !field
-    )
-  ) {
-    throw new ApiError(STATUS_CODES.BAD_REQUEST, "All fields are required");
-  }
+  const avatarFile = files?.avatar?.[0];
+  const coverImageFile = files?.coverImage?.[0];
 
-  console.log("files", files);
-
-  const existedUser = await User.findOne({ $or: [{ userName }, { email }] });
-
-  const avatarLocalPath = files?.avatar[0]?.path;
-  console.log("🚀 ~ registerUser ~ avatarLocalPath:", avatarLocalPath);
-  const coverImageLocalPath = files?.coverImage?.length
-    ? files.coverImage[0].path
-    : "";
-  console.log("🚀 ~ registerUser ~ coverImageLocalPath:", coverImageLocalPath);
-
-  if (existedUser) {
-    fs.unlinkSync(avatarLocalPath);
-    fs.unlinkSync(coverImageLocalPath);
-    throw new ApiError(
-      STATUS_CODES.CONFLICT,
-      "User with same email or username already exists"
-    );
-  }
-
-  const avatar = await uploadFile(avatarLocalPath);
-  console.log("🚀 ~ registerUser ~ avatar:", avatar);
-
-  if (!avatar)
-    throw new ApiError(STATUS_CODES.BAD_REQUEST, "Avatar file is required 2"); //testing 2
-
-  const coverImage = await uploadFile(coverImageLocalPath);
-  console.log("🚀 ~ registerUser ~ coverImage:", coverImage);
-
-  const userDoc = {
-    fullName,
-    avatar: avatar.url,
-    coverImage: coverImage?.avatar || "",
-    email: email.toLowerCase(),
-    password,
-    userName: userName.toLowerCase(),
-  };
-
-  const user = await User.create(userDoc);
-
-  // remove and replace with 1 query
-  const createdUser = await User.findById(user._id).select(
-    "-password -refreshToken"
-  );
-
-  if (!createdUser)
-    throw new ApiError(
-      STATUS_CODES.INTERNAL_SERVER_ERROR,
-      "Something went wrong while registering the user"
-    );
-
-  return res
-    .status(STATUS_CODES.CREATED)
-    .json(
-      new ApiResponse(
-        STATUS_CODES.CREATED,
-        createdUser,
-        "User registered Successfully"
+  try {
+    if (
+      [fullName, email, userName, password].some(
+        (field) => field?.trim() === "" || !field,
       )
+    )
+      throw new ApiError(STATUS_CODES.BAD_REQUEST, "All fields are required");
+
+    if (
+      avatarFile?.mimetype?.split("/")[0] != "image" ||
+      (coverImageFile && coverImageFile?.mimetype?.split("/")[0] != "image") ||
+      avatarFile?.size > 6 * 1_000_000 || // 6MB is the limit here
+      coverImageFile?.size > 12 * 1_000_000 // 12MB is the limit here
+    )
+      throw new ApiError(
+        STATUS_CODES.BAD_REQUEST,
+        "Upload image less then 6MB in correct image format!",
+      );
+
+    const existedUser = await User.findOne({ $or: [{ userName }, { email }] });
+
+    if (existedUser) {
+      throw new ApiError(
+        STATUS_CODES.CONFLICT,
+        "User with same email or username already exists",
+      );
+    }
+
+    const avatar = await uploadFile(avatarFile?.path);
+
+    if (!avatar)
+      throw new ApiError(STATUS_CODES.BAD_REQUEST, "Avatar file is required");
+
+    const coverImage = await uploadFile(coverImageFile?.path);
+
+    const userDoc = {
+      fullName,
+      avatar: avatar.url,
+      coverImage: coverImage?.url || "",
+      email: email.toLowerCase(),
+      password,
+      userName: userName.toLowerCase(),
+    };
+
+    const user = await User.create(userDoc);
+
+    // remove and replace with 1 query
+    const createdUser = await User.findById(user._id).select(
+      "-password -refreshToken",
     );
+
+    if (!createdUser)
+      throw new ApiError(
+        STATUS_CODES.INTERNAL_SERVER_ERROR,
+        "Something went wrong while registering the user",
+      );
+
+    return res
+      .status(STATUS_CODES.CREATED)
+      .json(
+        new ApiResponse(
+          STATUS_CODES.CREATED,
+          createdUser,
+          "User registered Successfully",
+        ),
+      );
+  } finally {
+    // Cleanup: Deleting local temporarily saved files on the server
+    avatarFile && fs.unlinkSync(avatarFile?.path);
+    coverImageFile && fs.unlinkSync(coverImageFile?.path);
+  }
 });
 
 const loginUser = asyncHandler(async (req, res) => {
@@ -92,7 +98,7 @@ const loginUser = asyncHandler(async (req, res) => {
   if (!(userName || email))
     throw new ApiError(
       STATUS_CODES.BAD_REQUEST,
-      "Username or email is required"
+      "Username or email is required",
     );
 
   const user = await User.findOne({ $or: [{ userName }, { email }] });
@@ -105,7 +111,7 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new ApiError(STATUS_CODES.UNAUTHORIZED, "Invalid user credentials");
 
   const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
-    user._id
+    user._id,
   );
 
   const loggedInUser: Partial<IUser> = { ...user.toObject(), refreshToken };
@@ -120,8 +126,8 @@ const loginUser = asyncHandler(async (req, res) => {
       new ApiResponse(
         STATUS_CODES.OK,
         loggedInUser,
-        "User logged In Successfully"
-      )
+        "User logged In Successfully",
+      ),
     );
 });
 
@@ -129,7 +135,7 @@ const logoutUser = asyncHandler(async (req, res) => {
   await User.findByIdAndUpdate(
     req.verifiedUser._id,
     { $unset: { refreshToken: 1 } }, // unset removes the field
-    { new: true }
+    { new: true },
   );
 
   return res
@@ -148,7 +154,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
   const decodedToken = jwt.verify(
     incomingRefreshToken,
-    REFRESH_TOKEN_SECRET
+    REFRESH_TOKEN_SECRET,
   ) as IAccessTokenPayload;
 
   const user = await User.findById(decodedToken?._id);
@@ -160,7 +166,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     throw new ApiError(STATUS_CODES.UNAUTHORIZED, "Refresh token is expired");
 
   const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
-    user._id
+    user._id,
   );
 
   return res
@@ -171,8 +177,8 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
       new ApiResponse(
         STATUS_CODES.OK,
         { accessToken, refreshToken },
-        "Access token refreshed"
-      )
+        "Access token refreshed",
+      ),
     );
 });
 
@@ -182,7 +188,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
   if (!oldPassword || !newPassword)
     throw new ApiError(
       STATUS_CODES.BAD_REQUEST,
-      "Please send old and new password fields"
+      "Please send old and new password fields",
     );
 
   const user = await User.findById(req.verifiedUser._id)!;
@@ -199,7 +205,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
   return res
     .status(STATUS_CODES.OK)
     .json(
-      new ApiResponse(STATUS_CODES.OK, null, "Password changed successfully")
+      new ApiResponse(STATUS_CODES.OK, null, "Password changed successfully"),
     );
 });
 
@@ -231,7 +237,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
   const user = await User.findByIdAndUpdate(
     req.verifiedUser._id,
     { $set: newUser },
-    { new: true }
+    { new: true },
   ).select("-password");
 
   return res
@@ -240,8 +246,8 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
       new ApiResponse(
         STATUS_CODES.OK,
         user,
-        "Account details updated successfully"
-      )
+        "Account details updated successfully",
+      ),
     );
 });
 
@@ -259,13 +265,13 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
   if (!avatar)
     throw new ApiError(
       STATUS_CODES.BAD_REQUEST,
-      "Error while uploading on avatar"
+      "Error while uploading on avatar",
     );
 
   const user = await User.findByIdAndUpdate(
     req.verifiedUser._id,
     { $set: { avatar: avatar.url } },
-    { new: true }
+    { new: true },
   ).select("-password");
 
   return res
@@ -274,8 +280,8 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
       new ApiResponse(
         STATUS_CODES.OK,
         user || null,
-        "Avatar image updated successfully"
-      )
+        "Avatar image updated successfully",
+      ),
     );
 });
 
@@ -294,14 +300,14 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
   if (!coverImage) {
     throw new ApiError(
       STATUS_CODES.BAD_REQUEST,
-      "Error while uploading on avatar"
+      "Error while uploading on avatar",
     );
   }
 
   const user = await User.findByIdAndUpdate(
     req.verifiedUser?._id,
     { $set: { coverImage: coverImage.url } },
-    { new: true }
+    { new: true },
   ).select("-password");
 
   return res
@@ -310,8 +316,8 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
       new ApiResponse(
         STATUS_CODES.OK,
         user || null,
-        "Cover image updated successfully"
-      )
+        "Cover image updated successfully",
+      ),
     );
 });
 
@@ -377,8 +383,8 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
       new ApiResponse(
         STATUS_CODES.OK,
         channel[0],
-        "User channel fetched successfully"
-      )
+        "User channel fetched successfully",
+      ),
     );
 });
 
@@ -423,8 +429,8 @@ const getWatchHistory = asyncHandler(async (req, res) => {
       new ApiResponse(
         STATUS_CODES.OK,
         user[0].watchHistory,
-        "Watch history fetched successfully"
-      )
+        "Watch history fetched successfully",
+      ),
     );
 });
 

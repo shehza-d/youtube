@@ -10,7 +10,7 @@ class ApiError extends Error {
     statusCode: STATUS_CODES_TYPE,
     message = "Something went wrong!🤷‍♂️",
     errors = [],
-    stack = ""
+    stack = "",
   ) {
     super(message);
     this.statusCode = statusCode;

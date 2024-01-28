@@ -11,7 +11,7 @@ const commentSchema = new Schema(
 
     owner: { type: Schema.ObjectId, ref: "User" },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 commentSchema.plugin(mongooseAggregatePaginate);

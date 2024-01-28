@@ -9,10 +9,10 @@ const subscriptionSchema = new Schema(
     // one to whom 'subscriber' is subscribing to
     channel: { type: Schema.Types.ObjectId, ref: "User" },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const Subscription = mongoose.model<ISubscription>(
   "Subscription",
-  subscriptionSchema
+  subscriptionSchema,
 );

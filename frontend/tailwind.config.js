@@ -18,8 +18,7 @@ module.exports = {
         screen: ["100vh /* fallback for Opera, IE and etc. */", "100dvh"],
       },
       colors: {
-        accent: "var(--accent-color)",
-        accentLow: "var(--accent-low-op)",
+        primary: "var(--primary-color)",
       },
     },
   },

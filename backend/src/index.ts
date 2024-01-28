@@ -9,7 +9,7 @@ dotenv.config({ path: "./env" }); // remove
   try {
     await connectDB();
     app.listen(PORT, () =>
-      console.log(`⚙️ Server running at port ==>> ${PORT}`)
+      console.log(`⚙️ Server running at port ==>> ${PORT}`),
     );
     app.on("error", (error) => console.log("🚀 ~ index.ts:17 ~ error:", error));
   } catch (err) {

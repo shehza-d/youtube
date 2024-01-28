@@ -17,7 +17,7 @@ const likeSchema = new Schema(
 
     likedBy: { type: ObjectId, ref: "User" },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const Like = model<ILike>("Like", likeSchema);

@@ -13,19 +13,18 @@ export const verifyJWT = asyncHandler(async (req, _, next) => {
     if (!accessToken)
       throw new ApiError(
         401,
-        "Unauthorized request! Include http-only credential"
+        "Unauthorized request! Include http-only credential",
       );
 
     const decodedData = jwt.verify(
       accessToken,
-      ACCESS_TOKEN_SECRET
+      ACCESS_TOKEN_SECRET,
     ) as IAccessTokenPayload;
 
     req.verifiedUser = decodedData;
 
     next();
   } catch (err: any) {
-
     // res
     // .cookie("myToken", "", {
     //   maxAge: 1,

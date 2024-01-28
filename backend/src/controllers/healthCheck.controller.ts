@@ -9,9 +9,9 @@ const healthCheck = asyncHandler(async (_, res) =>
       new ApiResponse(
         200,
         {},
-        "💯 Youtube Clone Server by Shehzad is up and running smoothly! 🌟"
-      )
-    )
+        "💯 Youtube Clone Server by Shehzad is up and running smoothly! 🌟",
+      ),
+    ),
 );
 
 export { healthCheck };

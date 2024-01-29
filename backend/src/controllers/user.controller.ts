@@ -210,12 +210,18 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 });
 
 const getCurrentUser = asyncHandler(async (req, res) => {
-  const user = {
-    _id: req.verifiedUser._id,
-    email: req.verifiedUser.email,
-    fullName: req.verifiedUser.fullName,
-    userName: req.verifiedUser.userName,
-  };
+  // await new Promise((resolve) => setTimeout(resolve, 4000));
+
+  const user = await User.findById(req.verifiedUser._id).select(
+    "-password -refreshToken",
+  );
+
+  // const user = {
+  //   _id: req.verifiedUser._id,
+  //   email: req.verifiedUser.email,
+  //   fullName: req.verifiedUser.fullName,
+  //   userName: req.verifiedUser.userName,
+  // };
 
   return res
     .status(STATUS_CODES.OK)

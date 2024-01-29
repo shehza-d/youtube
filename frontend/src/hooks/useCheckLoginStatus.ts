@@ -1,14 +1,12 @@
-import { GlobalContext } from "../context/index";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import axios from "axios";
-import { getUrl } from "../helpers";
-import { useEffect, useState, useContext } from "react";
+import { AppDispatch } from "../types";
+import { wasUserLoggedIn, reset, logout } from "../store/auth/authSlice";
 
+// logout left
 export default function useCheckLoginStatus() {
-  const { state, dispatch } = useContext(GlobalContext);
-
-  console.log(
-    "🚀 ~ file: useCheckLoginStatus.ts:8 ~ useCheckLoginStatus ~ state:",
-  );
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     // Add a request interceptor
@@ -36,9 +34,7 @@ export default function useCheckLoginStatus() {
         // Any status codes that falls outside the range of 2xx cause this function to trigger
         // Do something with response error
         if (error.response.status === 401) {
-          dispatch({
-            type: "USER_LOGOUT",
-          });
+          // dispatch(logout());
         }
         return Promise.reject(error);
       },
@@ -46,34 +42,38 @@ export default function useCheckLoginStatus() {
   }, []);
 
   useEffect(() => {
-    const checkLoginStatus = async () => {
-      try {
-        const { data } = await axios.get(
-          `${getUrl()}/api/v1/users/current-user`,
-          {
-            withCredentials: true,
-            headers: {
-              "Cache-Control": "no-cache",
-              Pragma: "no-cache",
-              Expires: "0",
-            },
-          },
-        );
-
-        console.log("🚀 ~ file: useCheckLoginStatus.ts:29 ~ ~ data:", data);
-
-        dispatch({ type: "USER_LOGIN", payload: data.data });
-      } catch (err) {
-        console.log(
-          "🚀 ~ file: useCheckLoginStatus.ts:42 ~ checkLoginStatus ~ err:",
-          err,
-        );
-        dispatch({ type: "USER_LOGOUT" });
-      }
-    };
-
-    checkLoginStatus();
+    dispatch(wasUserLoggedIn());
   }, []);
+
+  // useEffect(() => {
+  //   const checkLoginStatus = async () => {
+  //     try {
+  //       const { data } = await axios.get(
+  //         `${getUrl()}/api/v1/users/current-user`,
+  //         {
+  //           withCredentials: true,
+  //           headers: {
+  //             "Cache-Control": "no-cache",
+  //             Pragma: "no-cache",
+  //             Expires: "0",
+  //           },
+  //         },
+  //       );
+
+  //       console.log("🚀 ~ file: useCheckLoginStatus.ts:29 ~ ~ data:", data);
+
+  //       // dispatch({ type: "USER_LOGIN", payload: data.data });
+  //     } catch (err) {
+  //       console.log(
+  //         "🚀 ~ file: useCheckLoginStatus.ts:42 ~ checkLoginStatus ~ err:",
+  //         err,
+  //       );
+  //       // dispatch({ type: "USER_LOGOUT" });
+  //     }
+  //   };
+
+  //   checkLoginStatus();
+  // }, []);
 
   return {};
 }

@@ -1,14 +1,15 @@
+export { type RootState } from "../store/store";
+export { type AppDispatch } from "../store/store";
+
 export type TFields = "fullName" | "email" | "password";
 
 export interface IUser {
   _id: string;
-  createdOn: Date;
-  name: string;
+  fullName: string;
+  userName: string;
   email: string;
-  password: string;
-  isDoctor: boolean; // Patient or Doctor
-  organization?: string; // doc only
-  experience?: number; // doc only
-  specialization?: string; // doc only
-  // timing:'5 10'
+  avatar: string;
+  coverImage: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

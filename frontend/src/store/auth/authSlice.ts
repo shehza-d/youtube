@@ -1,23 +1,41 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  type PayloadAction,
+} from "@reduxjs/toolkit";
 import { authService } from "./authService";
+import { IUser } from "../../types";
 
-const initialState = {
+interface IAuthState {
+  user: null | IUser;
+  isUserLoggedIn: null | boolean;
+  isSuccess: boolean;
+  isLoading: boolean;
+  errorMessage: string;
+}
+
+const initialState: IAuthState = {
   user: null,
-  isError: false,
+  isUserLoggedIn: null,
   isSuccess: false,
   isLoading: false,
-  message: "",
+  errorMessage: "",
 };
 
-export const registerUser = createAsyncThunk(
-  "auth/register",
-  async (user, thunkAPI) => {
+// Login user
+export const login = createAsyncThunk(
+  "auth/login",
+  async (
+    user: {
+      email: string;
+      password: string;
+    },
+    thunkAPI,
+  ) => {
     try {
-      return await authService.register(user);
+      return await authService.login(user);
     } catch (error: any) {
-      console.log("🚀 ~ registerUser error:", error);
-
-      const message: string =
+      const message =
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
@@ -28,33 +46,88 @@ export const registerUser = createAsyncThunk(
   },
 );
 
+// Testing Ping
+export const wasUserLoggedIn = createAsyncThunk(
+  "auth/ping",
+  async (user, thunkAPI) => {
+    try {
+      return await authService.ping();
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  },
+);
+
+export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+  try {
+    return await authService.logout();
+  } catch (error: any) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     reset: (state) => {
-      state.isError = false;
       state.isSuccess = false;
       state.isLoading = false;
-      state.message = "";
+      state.errorMessage = "";
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.pending, (state) => {
+      .addCase(login.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(registerUser.fulfilled, (state, action) => {
+      .addCase(login.fulfilled, (state, action: PayloadAction<IAuthState>) => {
         state.isLoading = false;
-        state.isSuccess = action?.payload?.success || true;
-        state.user = action.payload;
+        state.isSuccess = true;
+        state.user = action.payload as any;
+        state.isUserLoggedIn = true;
       })
-      .addCase(registerUser.rejected, (state, action) => {
+      .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
-        state.message = `${action.payload}`;
+        state.errorMessage = `${action.payload} `;
         state.user = null;
+        state.isUserLoggedIn = false;
+      })
+      .addCase(wasUserLoggedIn.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(
+        wasUserLoggedIn.fulfilled,
+        (state, action: PayloadAction<IAuthState>) => {
+          state.isLoading = false;
+          state.isSuccess = true;
+          state.user = action.payload as any;
+          state.isUserLoggedIn = true;
+        },
+      )
+      .addCase(wasUserLoggedIn.rejected, (state, action) => {
+        state.isLoading = false;
+        state.errorMessage = `${action.payload} `;
+        state.user = null;
+        state.isUserLoggedIn = false;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.user = null;
+        state.isUserLoggedIn = false;
       });
+    // .addCase(logout.pending, (state) => {
+    //   state.isLoading = true;
+    // });
   },
 });
 

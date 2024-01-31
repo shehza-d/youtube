@@ -38,6 +38,7 @@
     "@types/multer": "^1.4.11",
     "@types/node": "^20.8.10",
     "concurrently": "^8.2.1",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "typescript": "^5.3.3"
   }
 }

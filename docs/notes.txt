@@ -35,3 +35,8 @@ Your code not only needs to work, it also has to be fast, reliable, secure, acce
 
 const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/; // testing left
 
+https://docs.cyclic.sh/docs/concepts/storage
+https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html
+
+important for react query and nestjs
+https://github.com/jherr/rtk-query-vs-rq

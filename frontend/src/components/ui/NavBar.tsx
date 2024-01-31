@@ -1,56 +1,39 @@
-import { Link } from "react-router-dom";
-import { FiMenu as MenuIcon } from "react-icons/fi";
-import { RxCross1 as CrossIcon } from "react-icons/rx";
-import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+// import { FiMenu as MenuIcon } from "react-icons/fi";
+// import { RxCross1 as CrossIcon } from "react-icons/rx";
+// import { ImCross } from "react-icons/im";
 import Logo from "../../assets/icons/logo";
-import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../types";
 import { FiSearch } from "react-icons/fi";
-import { ImCross } from "react-icons/im";
 import { AiOutlineLike } from "react-icons/ai";
 import { IoVideocam } from "react-icons/io5";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
-import { logout } from "../../store/auth/authSlice";
-
-const navLinks = [
-  { title: "home", liLinecapnk: "/", id: 1 },
-  { title: "logout", link: "/logout", id: 2 },
-  //   { title: "men", link: "/products/men", id: 3 },
-];
-
-//   const logoutHandler = async () => {
-//     try {
-//       const response = await axios.post(
-//         `${getUrl()}/logout`,
-//         {},
-//         { withCredentials: true },
-//       );
-//       console.log("response: ", response);
-//       toast.success("Here is your toast.");
-
-//       dispatch({ type: "USER_LOGOUT" });
-//     } catch (error) {
-//       console.log("axios error: ", error);
-//       toast.error("err");
-//     }
-//   };
-
-// }
+import useLogout from "../../hooks/auth/useLogout";
 
 export default function Navbar() {
-  const dispatch = useDispatch<AppDispatch>();
+  const { logoutHandler } = useLogout();
 
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { user, isUserLoggedIn } = useSelector(
+    (state: RootState) => state.auth,
+  );
 
-  console.log("🚀 ~ user:", user);
+  const { pathname } = useLocation();
+
+  if (
+    pathname === "/login" ||
+    pathname === "/sign-up" ||
+    isUserLoggedIn === null
+  )
+    return null;
 
   const isLogin = !!user;
 
-  const [open, setOpen] = useState(false); // this open refers to dropdown menu of mobile
-  const [showNavbar, setShowNavbar] = useState(false);
-  const pathname = "home";
+  // const [open, setOpen] = useState(false); // this open refers to dropdown menu of mobile
+  // const [showNavbar, setShowNavbar] = useState(false);
 
+  // const pathname = "home";
   // useEffect(() => { //   if (pathname !== "/") { //     setShowNavbar(true);
 
   const sideNavbarLinks = [
@@ -115,12 +98,18 @@ export default function Navbar() {
           <div className="mb-8 mt-auto flex w-full flex-wrap gap-4 px-4 sm:mb-0 sm:mt-0 sm:items-center sm:px-0">
             {!isLogin ? (
               <>
-                <button className="w-full bg-[#383737] px-3 py-2 hover:bg-[#4f4e4e] sm:w-auto sm:bg-transparent">
+                <Link
+                  to="/login"
+                  className="w-full bg-[#383737] px-3 py-2 hover:bg-[#4f4e4e] sm:w-auto sm:bg-transparent"
+                >
                   Log in
-                </button>
-                <button className="mr-1 w-full bg-primary px-3 py-2 text-center font-bold text-black shadow-[5px_5px_0px_0px_#4f4e4e] transition-all duration-150 ease-in-out active:translate-x-[5px] active:translate-y-[5px] active:shadow-[0px_0px_0px_0px_#4f4e4e] sm:w-auto">
+                </Link>
+                <Link
+                  to="/sign-up"
+                  className="mr-1 w-full bg-primary px-3 py-2 text-center font-bold text-black shadow-[5px_5px_0px_0px_#4f4e4e] transition-all duration-150 ease-in-out active:translate-x-[5px] active:translate-y-[5px] active:shadow-[0px_0px_0px_0px_#4f4e4e] sm:w-auto"
+                >
                   Sign up
-                </button>
+                </Link>
               </>
             ) : (
               <>
@@ -137,9 +126,7 @@ export default function Navbar() {
                   </div>
                 </button>
                 <button
-                  onClick={() => {
-                    dispatch(logout());
-                  }}
+                  onClick={logoutHandler}
                   className="mr-1 w-full bg-primary px-3 py-2 text-center font-bold text-black shadow-[5px_5px_0px_0px_#4f4e4e] transition-all duration-150 ease-in-out active:translate-x-[5px] active:translate-y-[5px] active:shadow-[0px_0px_0px_0px_#4f4e4e] sm:w-auto"
                 >
                   Logout

@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { AppDispatch } from "../types";
-import { wasUserLoggedIn, reset, logout } from "../store/auth/authSlice";
+import { AppDispatch } from "../../types";
+import { addUser, removeUser } from "../../store/auth/authSlice";
+import { pingToGetAuthenticatedUser } from "../../lib/api";
 
-// logout left
 export default function useCheckLoginStatus() {
+  //
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -13,7 +14,6 @@ export default function useCheckLoginStatus() {
     axios.interceptors.request.use(
       function (config) {
         // Do something before request is sent
-        console.log("interceptor");
         config.withCredentials = true;
         return config;
       },
@@ -34,7 +34,7 @@ export default function useCheckLoginStatus() {
         // Any status codes that falls outside the range of 2xx cause this function to trigger
         // Do something with response error
         if (error.response.status === 401) {
-          // dispatch(logout());
+          dispatch(removeUser());
         }
         return Promise.reject(error);
       },
@@ -42,38 +42,19 @@ export default function useCheckLoginStatus() {
   }, []);
 
   useEffect(() => {
-    dispatch(wasUserLoggedIn());
+    (async () => {
+      try {
+        // this api call is happening more then once
+        const { data } = await pingToGetAuthenticatedUser();
+
+        dispatch(addUser(data!));
+      } catch (err) {
+        console.log("🚀 ~ useEffect ~ err:", err);
+
+        dispatch(removeUser());
+      }
+    })();
   }, []);
-
-  // useEffect(() => {
-  //   const checkLoginStatus = async () => {
-  //     try {
-  //       const { data } = await axios.get(
-  //         `${getUrl()}/api/v1/users/current-user`,
-  //         {
-  //           withCredentials: true,
-  //           headers: {
-  //             "Cache-Control": "no-cache",
-  //             Pragma: "no-cache",
-  //             Expires: "0",
-  //           },
-  //         },
-  //       );
-
-  //       console.log("🚀 ~ file: useCheckLoginStatus.ts:29 ~ ~ data:", data);
-
-  //       // dispatch({ type: "USER_LOGIN", payload: data.data });
-  //     } catch (err) {
-  //       console.log(
-  //         "🚀 ~ file: useCheckLoginStatus.ts:42 ~ checkLoginStatus ~ err:",
-  //         err,
-  //       );
-  //       // dispatch({ type: "USER_LOGOUT" });
-  //     }
-  //   };
-
-  //   checkLoginStatus();
-  // }, []);
 
   return {};
 }

@@ -1,5 +1,5 @@
 import Input from "../ui/Input";
-import useLogin from "../../hooks/useLogin";
+import useLogin from "../../hooks/auth/useLogin";
 import Button from "../ui/Button";
 
 export default function LoginForm() {

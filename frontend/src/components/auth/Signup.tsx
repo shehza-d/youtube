@@ -1,4 +1,4 @@
-import useSignup from "../../hooks/useSignup";
+import useSignup from "../../hooks/auth/useSignup";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 

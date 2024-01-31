@@ -1,5 +1,7 @@
 # Server Hosting
 
+https://aws.amazon.com/elasticbeanstalk/pricing
+
 1. ```bash
    sudo eb init
    ```

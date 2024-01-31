@@ -4,8 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   signupFormSchema,
   type signupFormSchemaType,
-} from "../lib/zodValidation";
-import { constructFormData, getUrl } from "../helpers";
+} from "../../lib/zodValidation";
+import { constructFormData, getUrl } from "../../helpers";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

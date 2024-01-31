@@ -10,6 +10,14 @@ export interface IUser {
   email: string;
   avatar: string;
   coverImage: string;
+  watchHistory?: any[];
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface IResponse<T> {
+  data: null | T;
+  message: string;
+  statusCode: number;
+  success: boolean;
 }

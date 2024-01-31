@@ -31,7 +31,7 @@ export default function AuthPage({ type }: { type: "login" | "signup" }) {
         </Link>
       </div>
 
-      <div className="w-[90%] md:w-[50%]">
+      <div className="mb-24 w-[90%] md:w-[50%]">
         {type === "login" ? <LoginForm /> : <SignupForm />}
       </div>
     </div>

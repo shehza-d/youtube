@@ -1,6 +1,6 @@
 const LoadingSvg = (
   <svg
-    className="fill-primary h-48 w-48 md:h-64 md:w-64"
+    className="h-48 w-48 fill-primary md:h-64 md:w-64"
     width={262}
     height={262}
     viewBox="0 0 100 100"

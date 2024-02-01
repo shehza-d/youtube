@@ -24,12 +24,11 @@ redux async thunk??
 
 try destructuring Types.ObjectId
 
-https://github.com/saheemshafi/void-videos
 https://github.com/saheemshafi/void-video
 https://github.com/malik991/BackendWithjavaScript
 https://github.com/YashR25/Youtube-Backend
 https://github.com/GmKandhro/youtube-clone-backend
-
+https://github.com/AbuSufyan53/backendHeavyProject
 
 Your code not only needs to work, it also has to be fast, reliable, secure, accessible, scalable, comprehensible to your teammates (and future you), operational with your teammates' code and all the third-party and internal systems it interacts with.
 
@@ -40,3 +39,6 @@ https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html
 
 important for react query and nestjs
 https://github.com/jherr/rtk-query-vs-rq
+
+
+https://tanstack.com/query/latest/docs/framework/react/quick-start

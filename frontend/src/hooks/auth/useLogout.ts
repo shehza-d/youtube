@@ -14,9 +14,12 @@ export default function useLogout() {
       dispatch(removeUser());
 
       toast.success(res?.message || "Logout successfully!");
-    } catch (error) {
-      console.log("error in logout: ", error);
-      toast.error("Unknown error!");
+
+      //
+    } catch (err: any) {
+      console.log("err in logout: ", err);
+
+      toast.error(err?.message || "Unknown error!");
     }
   };
 

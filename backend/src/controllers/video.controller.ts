@@ -1,4 +1,4 @@
-import mongoose, { isValidObjectId } from "mongoose";
+import mongoose, { isValidObjectId, type PipelineStage } from "mongoose";
 import { Video } from "../models/video.model.js";
 import { User } from "../models/user.model.js";
 import {
@@ -15,10 +15,59 @@ import fs from "node:fs";
 const ObjectId = mongoose.Types.ObjectId;
 
 const getAllVideos = asyncHandler(async (req, res) => {
-  const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
+  const {
+    search_query,
+    userId,
+    sortBy = "views",
+    sortType,
+    page = 1,
+  } = req.query;
   //TODO: get all videos based on query, sort, pagination
+
+  const sortOptions = {
+    sortType: "desc" ? -1 : 1,
+  };
+
+  const pipeline: PipelineStage[] = [{ $match: { isPublished: true } }];
+
+  if (search_query) {
+    pipeline.push({
+      $search: {
+        index: "search-videos",
+        text: { query: search_query, path: ["title", "description"] },
+      },
+    });
+  } else if (userId) {
+    // pipeline.push({
+    // $match: { owner: new mongoose.Types.ObjectId(userId) },
+    // });
+  }
+
+  if (sortBy && sortType) {
+    //console.log(sortBy, sortType);
+    pipeline.push({
+      $sort: {
+        // [sortBy]: sortType === "asc" ? 1 : -1,
+      },
+    });
+  } else {
+    pipeline.push({ $sort: { createdAt: -1 } });
+  }
+
+  const limit = Number(req.query?.limit) || 10;
+
+  const videos = await Video.find({
+    $or: [{ title: { $search: search_query } }, { owner: userId }],
+  })
+    .limit(limit)
+    .sort({ _id: -1 }); //Number(sortBy) });
+
+  // console.log("🚀 ~ getAllVideos ~ videos:", videos);
+
+  res.send(videos);
 });
 
+// testing again for promise.allSettle
 const uploadVideo = asyncHandler(async (req, res) => {
   const { title, description } = req.body;
 
@@ -43,22 +92,28 @@ const uploadVideo = asyncHandler(async (req, res) => {
       );
     }
 
-    const videoUrl = await uploadFile(videoFile?.path);
-    const thumbnail = await uploadFile(thumbnailFile?.path);
+    const [videoUploadResponse, thumbnailUploadResponse] =
+      await Promise.allSettled([
+        uploadFile(videoFile?.path),
+        uploadFile(thumbnailFile?.path),
+      ]);
 
-    if (!videoUrl)
+    if (
+      videoUploadResponse?.status == "rejected" ||
+      thumbnailUploadResponse?.status == "rejected"
+    )
       throw new ApiError(
         STATUS_CODES.INTERNAL_SERVER_ERROR,
         "Error while uploading video!",
       );
 
     const videoDoc: Partial<IVideo> = {
-      videoFile: videoUrl.url,
+      videoFile: videoUploadResponse.value?.url,
       title,
       description: description || "",
       owner: new ObjectId(req.verifiedUser._id),
-      duration: videoUrl?.duration,
-      thumbnail: thumbnail?.url || "",
+      duration: videoUploadResponse.value?.duration,
+      thumbnail: thumbnailUploadResponse?.value?.url || "",
     };
 
     const video = await Video.create(videoDoc);
@@ -99,11 +154,46 @@ const updateVideo = asyncHandler(async (req, res) => {
 
 const deleteVideo = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
-  //TODO: delete video
+
+  if (!mongoose.isValidObjectId(videoId))
+    throw new ApiError(STATUS_CODES.BAD_REQUEST, "Invalid Video Id!");
+
+  const video = await Video.findByIdAndDelete(videoId);
+
+  if (!video) throw new ApiError(STATUS_CODES.NOT_FOUND, "Video not found!");
+
+  res
+    .status(STATUS_CODES.OK)
+    .json(
+      new ApiResponse(STATUS_CODES.OK, null, "Video deleted successfully!"),
+    );
 });
 
 const togglePublishStatus = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
+
+  if (!mongoose.isValidObjectId(videoId))
+    throw new ApiError(STATUS_CODES.BAD_REQUEST, "Invalid Video Id!");
+
+  const video = await Video.findByIdAndUpdate(
+    videoId,
+    [{ $set: { isPublished: { $not: "$isPublished" } } }],
+    { new: true },
+  );
+
+  if (!video) throw new ApiError(STATUS_CODES.NOT_FOUND, "Video not found!");
+
+  res
+    .status(STATUS_CODES.OK)
+    .json(
+      new ApiResponse(
+        STATUS_CODES.OK,
+        null,
+        `Video ${
+          video?.isPublished ? "published" : "unpublished"
+        } successfully!`,
+      ),
+    );
 });
 
 export {

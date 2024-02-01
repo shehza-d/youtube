@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { upload, verifyJWT } from "../middleware/index.js";
 import {
   deleteVideo,
   getAllVideos,
@@ -7,7 +8,6 @@ import {
   togglePublishStatus,
   updateVideo,
 } from "../controllers/video.controller.js";
-import { upload, verifyJWT } from "../middleware/index.js";
 
 const router = Router();
 
@@ -28,9 +28,9 @@ router
 router
   .route("/:videoId")
   .get(getVideoById) // done
-  .delete(deleteVideo)
-  .patch(upload.single("thumbnail"), updateVideo);
+  .delete(deleteVideo) // done
+  .patch(upload.single("thumbnail"), updateVideo); // left
 
-router.route("/toggle/publish/:videoId").patch(togglePublishStatus);
+router.route("/toggle/publish/:videoId").patch(togglePublishStatus); // done
 
 export { router as videoRouter };

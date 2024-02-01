@@ -12,7 +12,6 @@ const login = async (userData: loginFormSchemaType) => {
     `${getUrl()}/api/v1/users/login`,
     userData,
   );
-  console.log("🚀 ~ login ~ data:", data);
 
   return data;
 };

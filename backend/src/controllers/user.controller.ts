@@ -7,8 +7,8 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadFile } from "../utils/fileUpload.js";
 import { generateAccessAndRefreshTokens } from "../utils/generateTokens.js";
 import { REFRESH_TOKEN_SECRET } from "../config/index.js";
-import { STATUS_CODES, cookieOptions } from "../config/constants.js";
 import { IAccessTokenPayload, IUser } from "../types/index.js";
+import { STATUS_CODES, cookieOptions, MESSAGES } from "../config/constants.js";
 
 // Register of Sign-up // validation/testing left
 const registerUser = asyncHandler(async (req, res) => {
@@ -25,7 +25,7 @@ const registerUser = asyncHandler(async (req, res) => {
         (field) => field?.trim() === "" || !field,
       )
     )
-      throw new ApiError(STATUS_CODES.BAD_REQUEST, "All fields are required");
+      throw new ApiError(STATUS_CODES.BAD_REQUEST, MESSAGES.MISSING_FIELDS);
 
     if (
       avatarFile?.mimetype?.split("/")[0] != "image" ||
@@ -73,7 +73,7 @@ const registerUser = asyncHandler(async (req, res) => {
     if (!createdUser)
       throw new ApiError(
         STATUS_CODES.INTERNAL_SERVER_ERROR,
-        "Something went wrong while registering the user",
+        MESSAGES.USER_REGISTERING_FAIL,
       );
 
     return res
@@ -150,7 +150,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     req.cookies.refreshToken || req.body.refreshToken;
 
   if (!incomingRefreshToken)
-    throw new ApiError(STATUS_CODES.UNAUTHORIZED, "Unauthorized request");
+    throw new ApiError(STATUS_CODES.UNAUTHORIZED, MESSAGES.UNAUTHORIZE);
 
   const decodedToken = jwt.verify(
     incomingRefreshToken,

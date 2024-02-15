@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
+    "dev": "concurrently \"npx tsc --watch\" \"node --watch dist/index.js\"",
     "deploy": "gcloud app deploy",
     "zip": "git archive -v -o app.zip --format=zip HEAD",
     "test": "echo \"Error: no test specified\" && exit 1"

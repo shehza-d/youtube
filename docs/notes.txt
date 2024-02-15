@@ -29,6 +29,12 @@ https://github.com/malik991/BackendWithjavaScript
 https://github.com/YashR25/Youtube-Backend
 https://github.com/GmKandhro/youtube-clone-backend
 https://github.com/AbuSufyan53/backendHeavyProject
+https://github.com/AnukulSaxena/test-backend
+Source code : https://github.com/codewithdipesh/chai-backend 📫Postman Collection: https://api.postman.com/collections/29213528-b18cbb6f-1d38-4abd-afad-648f764c8fdc?access_key=PMAT-01HN8QSSTMSNAJY156EWCH6HEQ
+https://github.com/PrtHub/backend-project 
+https://github.com/Tapan-Radadiya/Youtube-Twitter
+https://github.com/HRDs-VERSE/backend_withchai/tree/main/project
+https://github.com/MitvaVirvadiya/youtube-backend
 
 Your code not only needs to work, it also has to be fast, reliable, secure, accessible, scalable, comprehensible to your teammates (and future you), operational with your teammates' code and all the third-party and internal systems it interacts with.
 
@@ -42,3 +48,19 @@ https://github.com/jherr/rtk-query-vs-rq
 
 
 https://tanstack.com/query/latest/docs/framework/react/quick-start
+
+
+swagger for documentation or postman docs
+
+
+https://octoverse.github.com/2020/
+
+https://octoverse.github.com/2021/
+
+https://octoverse.github.com/2022/
+
+https://github.blog/2023-11-08-the-state-of-open-source-and-ai
+
+https://survey.stackoverflow.co/2023
+
+Interesting Insight

@@ -1,4 +1,5 @@
 import { type RequestHandler } from "express";
+import { MESSAGES } from "../config/constants.js";
 
 // with this asyncHandler we don't have to use try catch in every async function or controller
 
@@ -7,19 +8,16 @@ const asyncHandler = (requestHandler: RequestHandler): RequestHandler => {
   return async (req, res, next) => {
     //
     try {
-      await requestHandler(req, res, next); // try removing this await
+      await requestHandler(req, res, next);
     } catch (err: any) {
-      console.log("🚀 ~ return ~ err:", err);
+      console.log("🚀 ~ asyncHandler ~ err:", err);
 
       const statusCode = err.statusCode || 500;
-      const message = err?.message || "Something went wrong!🤷‍♂️";
+      const message = err?.message || MESSAGES.UNKNOWN;
 
-      res.status(statusCode).json({
-        statusCode,
-        message,
-        data: null,
-        success: false,
-      });
+      res
+        .status(statusCode)
+        .json({ statusCode, message, data: null, success: false });
       // next(err);
     }
   };

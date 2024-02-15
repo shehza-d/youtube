@@ -59,6 +59,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
   const videos = await Video.find({
     $or: [{ title: { $search: search_query } }, { owner: userId }],
   })
+    .skip(+page)
     .limit(limit)
     .sort({ _id: -1 }); //Number(sortBy) });
 

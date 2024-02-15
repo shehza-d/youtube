@@ -5,7 +5,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ITweet } from "../types/index.js";
-import { STATUS_CODES } from "../config/constants.js";
+import { MESSAGES, STATUS_CODES } from "../config/constants.js";
 
 // remove if not being used less then 1
 const ObjectId = mongoose.Types.ObjectId;
@@ -14,7 +14,7 @@ const createTweet = asyncHandler(async (req, res) => {
   const { content } = req.body;
 
   if (!content || typeof content !== "string" || content.length > 1000)
-    throw new ApiError(STATUS_CODES.BAD_REQUEST, "Content is required");
+    throw new ApiError(STATUS_CODES.BAD_REQUEST, MESSAGES.CONTENT_MISSING);
 
   const tweetDoc: ITweet = {
     content,
@@ -25,22 +25,20 @@ const createTweet = asyncHandler(async (req, res) => {
 
   res
     .status(STATUS_CODES.OK)
-    .json(new ApiResponse(STATUS_CODES.OK, tweet, "Tweeted successfully! 🐦"));
+    .json(new ApiResponse(STATUS_CODES.OK, tweet, MESSAGES.TWEET_SUCCESS));
 });
 
 const getUserTweets = asyncHandler(async (req, res) => {
   const { userId } = req.params;
 
   if (!mongoose.isValidObjectId(userId))
-    throw new ApiError(STATUS_CODES.BAD_REQUEST, "Invalid User Id!");
+    throw new ApiError(STATUS_CODES.BAD_REQUEST, MESSAGES.INVALID_USER_ID);
 
   const tweet = await Tweet.find({ owner: new ObjectId(userId) });
 
   res
     .status(STATUS_CODES.OK)
-    .json(
-      new ApiResponse(STATUS_CODES.OK, tweet, "Tweets fetched successfully!"),
-    );
+    .json(new ApiResponse(STATUS_CODES.OK, tweet, MESSAGES.TWEETS_FETCHED));
 });
 
 const updateTweet = asyncHandler(async (req, res) => {

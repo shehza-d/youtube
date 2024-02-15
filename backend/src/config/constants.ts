@@ -1,5 +1,22 @@
 import { type CookieOptions } from "express";
 
+export const MESSAGES = {
+  SERVER_RUNNING:
+    "💯 Youtube Clone Server by Shehzad is up and running smoothly! 🌟",
+  USER_NOT_FOUND: "User not found!",
+  INVALID_USER_ID: "Invalid User Id!",
+  UNKNOWN: "Something went wrong! 🤷‍♂️",
+  MISSING_FIELDS: "All fields are required!",
+
+  TOKEN_EXPIRED: "Invalid Token  jwt token expired", // TODO: improve
+  USER_REGISTERING_FAIL: "Something went wrong while registering the user",
+  UNAUTHORIZE: "Unauthorized request! Include http-only credential",
+
+  CONTENT_MISSING: "Tweet can not be empty!",
+  TWEET_SUCCESS: "Tweeted successfully! 🐦",
+  TWEETS_FETCHED: "Tweets fetched successfully!",
+} as const;
+
 export const STATUS_CODES = {
   // Information
   CONTINUE: 100,

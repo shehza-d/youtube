@@ -1,6 +1,7 @@
+import { type Types } from "mongoose";
 import { User } from "../models/user.model.js";
 import { ApiError } from "./ApiError.js";
-import { type Types } from "mongoose";
+import { STATUS_CODES } from "../config/constants.js";
 
 export const generateAccessAndRefreshTokens = async (
   userId: Types.ObjectId,
@@ -19,6 +20,9 @@ export const generateAccessAndRefreshTokens = async (
 
     return { accessToken, refreshToken };
   } catch (error) {
-    throw new ApiError(500, "Something went wrong while generating token");
+    throw new ApiError(
+      STATUS_CODES.INTERNAL_SERVER_ERROR,
+      "Something went wrong while generating token",
+    );
   }
 };

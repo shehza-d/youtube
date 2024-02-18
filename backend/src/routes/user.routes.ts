@@ -25,22 +25,23 @@ router.route("/register").post(
 );
 router.route("/login").post(loginUser);
 
-//secured routes
-router.route("/logout").post(verifyJWT, logoutUser);
+// secured routes
 router.route("/refresh-token").post(refreshAccessToken);
 
-router.route("/current-user").get(verifyJWT, getCurrentUser);
-router.route("/change-password").post(verifyJWT, changeCurrentPassword);
-router.route("/update-account").patch(verifyJWT, updateAccountDetails);
+router.use(verifyJWT);
 
-router.route("/c/:username").get(verifyJWT, getUserChannelProfile);
-router.route("/history").get(verifyJWT, getWatchHistory);
+router.route("/logout").post(logoutUser);
 
-router
-  .route("/avatar")
-  .patch(verifyJWT, upload.single("avatar"), updateUserAvatar);
+router.route("/current-user").get(getCurrentUser);
+router.route("/change-password").post(changeCurrentPassword);
+router.route("/update-account").patch(updateAccountDetails);
+
+router.route("/c/:username").get(getUserChannelProfile);
+router.route("/history").get(getWatchHistory);
+
+router.route("/avatar").patch(upload.single("avatar"), updateUserAvatar);
 router
   .route("/cover-image")
-  .patch(verifyJWT, upload.single("coverImage"), updateUserCoverImage);
+  .patch(upload.single("coverImage"), updateUserCoverImage);
 
 export { router as userRouter };

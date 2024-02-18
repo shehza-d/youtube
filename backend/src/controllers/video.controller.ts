@@ -122,7 +122,7 @@ const uploadVideo = asyncHandler(async (req, res) => {
     res
       .status(STATUS_CODES.OK)
       .json(
-        new ApiResponse(STATUS_CODES.OK, video, "Video uploaded successfully!"),
+        new ApiResponse(STATUS_CODES.OK, "Video uploaded successfully!", video),
       );
   } finally {
     // Cleanup: Deleting local temporarily saved files on the server
@@ -144,7 +144,7 @@ const getVideoById = asyncHandler(async (req, res) => {
   res
     .status(STATUS_CODES.OK)
     .json(
-      new ApiResponse(STATUS_CODES.OK, video, "Video fetched successfully!"),
+      new ApiResponse(STATUS_CODES.OK, "Video fetched successfully!", video),
     );
 });
 
@@ -165,9 +165,7 @@ const deleteVideo = asyncHandler(async (req, res) => {
 
   res
     .status(STATUS_CODES.OK)
-    .json(
-      new ApiResponse(STATUS_CODES.OK, null, "Video deleted successfully!"),
-    );
+    .json(new ApiResponse(STATUS_CODES.OK, "Video deleted successfully!"));
 });
 
 const togglePublishStatus = asyncHandler(async (req, res) => {
@@ -184,16 +182,11 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
 
   if (!video) throw new ApiError(STATUS_CODES.NOT_FOUND, "Video not found!");
 
+  const publishStatus = video?.isPublished ? "published" : "unpublished";
   res
     .status(STATUS_CODES.OK)
     .json(
-      new ApiResponse(
-        STATUS_CODES.OK,
-        null,
-        `Video ${
-          video?.isPublished ? "published" : "unpublished"
-        } successfully!`,
-      ),
+      new ApiResponse(STATUS_CODES.OK, `Video ${publishStatus} successfully!`),
     );
 });
 

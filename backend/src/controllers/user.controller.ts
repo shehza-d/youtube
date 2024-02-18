@@ -81,8 +81,8 @@ const registerUser = asyncHandler(async (req, res) => {
       .json(
         new ApiResponse(
           STATUS_CODES.CREATED,
-          createdUser,
           "User registered Successfully",
+          createdUser,
         ),
       );
   } finally {
@@ -125,8 +125,8 @@ const loginUser = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         STATUS_CODES.OK,
-        loggedInUser,
         "User logged In Successfully",
+        loggedInUser,
       ),
     );
 });
@@ -142,7 +142,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     .status(STATUS_CODES.OK)
     .clearCookie("accessToken", cookieOptions)
     .clearCookie("refreshToken", cookieOptions)
-    .json(new ApiResponse(STATUS_CODES.OK, null, "User logged Out"));
+    .json(new ApiResponse(STATUS_CODES.OK, "User logged Out"));
 });
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
@@ -174,11 +174,10 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     .cookie("accessToken", accessToken, cookieOptions)
     .cookie("refreshToken", refreshToken, cookieOptions)
     .json(
-      new ApiResponse(
-        STATUS_CODES.OK,
-        { accessToken, refreshToken },
-        "Access token refreshed",
-      ),
+      new ApiResponse(STATUS_CODES.OK, "Access token refreshed", {
+        accessToken,
+        refreshToken,
+      }),
     );
 });
 
@@ -204,9 +203,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 
   return res
     .status(STATUS_CODES.OK)
-    .json(
-      new ApiResponse(STATUS_CODES.OK, null, "Password changed successfully"),
-    );
+    .json(new ApiResponse(STATUS_CODES.OK, "Password changed successfully"));
 });
 
 const getCurrentUser = asyncHandler(async (req, res) => {
@@ -225,7 +222,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 
   return res
     .status(STATUS_CODES.OK)
-    .json(new ApiResponse(STATUS_CODES.OK, user, "User fetched successfully"));
+    .json(new ApiResponse(STATUS_CODES.OK, "User fetched successfully", user));
 });
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
@@ -251,8 +248,8 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         STATUS_CODES.OK,
-        user,
         "Account details updated successfully",
+        user,
       ),
     );
 });
@@ -285,8 +282,8 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         STATUS_CODES.OK,
-        user || null,
         "Avatar image updated successfully",
+        user || null,
       ),
     );
 });
@@ -321,8 +318,8 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         STATUS_CODES.OK,
-        user || null,
         "Cover image updated successfully",
+        user || null,
       ),
     );
 });
@@ -388,8 +385,8 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         STATUS_CODES.OK,
-        channel[0],
         "User channel fetched successfully",
+        channel[0],
       ),
     );
 });
@@ -414,16 +411,10 @@ const getWatchHistory = asyncHandler(async (req, res) => {
               localField: "owner",
               foreignField: "_id",
               as: "owner",
-              pipeline: [
-                {
-                  $project: { fullName: 1, userName: 1, avatar: 1 },
-                },
-              ],
+              pipeline: [{ $project: { fullName: 1, userName: 1, avatar: 1 } }],
             },
           },
-          {
-            $addFields: { owner: { $first: "$owner" } },
-          },
+          { $addFields: { owner: { $first: "$owner" } } },
         ],
       },
     },
@@ -434,8 +425,8 @@ const getWatchHistory = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         STATUS_CODES.OK,
-        user[0].watchHistory,
         "Watch history fetched successfully",
+        user[0].watchHistory,
       ),
     );
 });

@@ -1,6 +1,6 @@
 import mongoose, { isValidObjectId } from "mongoose";
 import { Tweet } from "../models/tweet.model.js";
-import { User } from "../models/user.model.js";
+// import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
@@ -30,7 +30,7 @@ const createTweet = asyncHandler(async (req, res) => {
 
   res
     .status(STATUS_CODES.OK)
-    .json(new ApiResponse(STATUS_CODES.OK, tweet, MESSAGES.TWEET_SUCCESS));
+    .json(new ApiResponse(STATUS_CODES.OK, MESSAGES.TWEET_SUCCESS, tweet));
 });
 
 const getRandomTweets = asyncHandler(async (req, res) => {
@@ -42,7 +42,7 @@ const getRandomTweets = asyncHandler(async (req, res) => {
 
   res
     .status(STATUS_CODES.OK)
-    .json(new ApiResponse(STATUS_CODES.OK, tweet, MESSAGES.TWEETS_FETCHED));
+    .json(new ApiResponse(STATUS_CODES.OK, MESSAGES.TWEETS_FETCHED, tweet));
 });
 
 const getUserTweets = asyncHandler(async (req, res) => {
@@ -57,7 +57,7 @@ const getUserTweets = asyncHandler(async (req, res) => {
 
   res
     .status(STATUS_CODES.OK)
-    .json(new ApiResponse(STATUS_CODES.OK, tweet, MESSAGES.TWEETS_FETCHED));
+    .json(new ApiResponse(STATUS_CODES.OK, MESSAGES.TWEETS_FETCHED, tweet));
 });
 
 const updateTweet = asyncHandler(async (req, res) => {
@@ -78,7 +78,7 @@ const updateTweet = asyncHandler(async (req, res) => {
   res
     .status(STATUS_CODES.OK)
     .json(
-      new ApiResponse(STATUS_CODES.OK, tweet, "Tweet updated successfully!"),
+      new ApiResponse(STATUS_CODES.OK, "Tweet updated successfully!", tweet),
     );
 });
 
@@ -94,9 +94,7 @@ const deleteTweet = asyncHandler(async (req, res) => {
 
   res
     .status(STATUS_CODES.OK)
-    .json(
-      new ApiResponse(STATUS_CODES.OK, null, "Tweet deleted successfully!"),
-    );
+    .json(new ApiResponse(STATUS_CODES.OK, "Tweet deleted successfully!"));
 });
 
 export {

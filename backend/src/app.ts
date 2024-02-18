@@ -36,6 +36,6 @@ app.use("/api/v1/likes", likeRouter);
 app.use("/api/v1/playlist", playlistRouter);
 app.use("/api/v1/dashboard", dashboardRouter);
 
-app.use("*", (_, res) => res.send("Route not found on Server!")); 
+app.use("*", (_, res) => res.send("Route not found on Server!"));
 
 export { app };

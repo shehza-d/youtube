@@ -52,15 +52,3 @@ https://tanstack.com/query/latest/docs/framework/react/quick-start
 
 swagger for documentation or postman docs
 
-
-https://octoverse.github.com/2020/
-
-https://octoverse.github.com/2021/
-
-https://octoverse.github.com/2022/
-
-https://github.blog/2023-11-08-the-state-of-open-source-and-ai
-
-https://survey.stackoverflow.co/2023
-
-Interesting Insight

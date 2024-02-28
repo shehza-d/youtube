@@ -1,6 +1,6 @@
-import mongoose, { isValidObjectId, type PipelineStage } from "mongoose";
+import { Types, isValidObjectId, type PipelineStage } from "mongoose";
 import { Video } from "../models/video.model.js";
-import { User } from "../models/user.model.js";
+// import { User } from "../models/user.model.js";
 import {
   ApiError,
   ApiResponse,
@@ -12,7 +12,7 @@ import { IVideo } from "../types/index.js";
 import fs from "node:fs";
 
 // remove if not being used less then 1
-const ObjectId = mongoose.Types.ObjectId;
+const ObjectId = Types.ObjectId;
 
 const getAllVideos = asyncHandler(async (req, res) => {
   const {
@@ -134,7 +134,7 @@ const uploadVideo = asyncHandler(async (req, res) => {
 const getVideoById = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
 
-  if (!mongoose.isValidObjectId(videoId))
+  if (!isValidObjectId(videoId))
     throw new ApiError(STATUS_CODES.BAD_REQUEST, "Invalid Video Id!");
 
   const video = await Video.findById(videoId);
@@ -156,7 +156,7 @@ const updateVideo = asyncHandler(async (req, res) => {
 const deleteVideo = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
 
-  if (!mongoose.isValidObjectId(videoId))
+  if (!isValidObjectId(videoId))
     throw new ApiError(STATUS_CODES.BAD_REQUEST, "Invalid Video Id!");
 
   const video = await Video.findByIdAndDelete(videoId);
@@ -171,7 +171,7 @@ const deleteVideo = asyncHandler(async (req, res) => {
 const togglePublishStatus = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
 
-  if (!mongoose.isValidObjectId(videoId))
+  if (!isValidObjectId(videoId))
     throw new ApiError(STATUS_CODES.BAD_REQUEST, "Invalid Video Id!");
 
   const video = await Video.findByIdAndUpdate(

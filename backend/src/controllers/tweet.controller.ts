@@ -1,4 +1,4 @@
-import mongoose, { isValidObjectId } from "mongoose";
+import { Types, isValidObjectId } from "mongoose";
 import { Tweet } from "../models/tweet.model.js";
 // import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
@@ -8,7 +8,7 @@ import { ITweet } from "../types/index.js";
 import { MESSAGES, STATUS_CODES } from "../config/constants.js";
 
 // remove if not being used less then 1
-const ObjectId = mongoose.Types.ObjectId;
+const ObjectId = Types.ObjectId;
 
 const validateContent = (str: any): string => {
   // remove after express validation
@@ -48,7 +48,7 @@ const getRandomTweets = asyncHandler(async (req, res) => {
 const getUserTweets = asyncHandler(async (req, res) => {
   const { userId } = req.params;
 
-  if (!mongoose.isValidObjectId(userId))
+  if (!isValidObjectId(userId))
     throw new ApiError(STATUS_CODES.BAD_REQUEST, MESSAGES.INVALID_USER_ID);
 
   const tweet = await Tweet.find({ owner: new ObjectId(userId) }).select(
@@ -64,7 +64,7 @@ const updateTweet = asyncHandler(async (req, res) => {
   const { tweetId } = req.params;
   const content = validateContent(req.body.content);
 
-  if (!mongoose.isValidObjectId(tweetId))
+  if (!isValidObjectId(tweetId))
     throw new ApiError(STATUS_CODES.BAD_REQUEST, "Invalid Tweet Id!");
 
   const tweet = await Tweet.findByIdAndUpdate(
@@ -85,7 +85,7 @@ const updateTweet = asyncHandler(async (req, res) => {
 const deleteTweet = asyncHandler(async (req, res) => {
   const { tweetId } = req.params;
 
-  if (!mongoose.isValidObjectId(tweetId))
+  if (!isValidObjectId(tweetId))
     throw new ApiError(STATUS_CODES.BAD_REQUEST, "Invalid Tweet Id!");
 
   const tweet = await Tweet.findByIdAndDelete(tweetId);

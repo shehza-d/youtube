@@ -1,4 +1,4 @@
-import mongoose, { isValidObjectId, Types } from "mongoose";
+import { isValidObjectId, Types } from "mongoose";
 import { User } from "../models/user.model.js";
 import { Subscription } from "../models/subscription.model.js";
 import { ApiResponse, ApiError, asyncHandler } from "../utils/index.js";
@@ -8,7 +8,7 @@ const toggleSubscription = asyncHandler(async (req, res) => {
   const { channelId } = req.params;
   const userId = req.verifiedUser._id;
 
-  if (!mongoose.isValidObjectId(channelId))
+  if (!isValidObjectId(channelId))
     throw new ApiError(STATUS_CODES.BAD_REQUEST, "Invalid Channel Id!");
 
   if (channelId === userId)
@@ -23,25 +23,20 @@ const toggleSubscription = asyncHandler(async (req, res) => {
 
   const subscription = await Subscription.findOne(subscriptionDoc);
 
-  if (!subscription) {
-    await Subscription.create(subscriptionDoc); //  new subscription
+  // if subscription is not found we will create new else we will delete the found sub for toggle
+  if (!subscription) await Subscription.create(subscriptionDoc);
+  else await Subscription.findByIdAndDelete(subscription._id);
 
-    res
-      .status(STATUS_CODES.OK)
-      .json(new ApiResponse(STATUS_CODES.OK, `Subscribed successfully!`));
-  } else {
-    await Subscription.findByIdAndDelete(subscription._id);
-
-    res
-      .status(STATUS_CODES.OK)
-      .json(new ApiResponse(STATUS_CODES.OK, `Unsubscribed successfully!`));
-  }
+  const message = !subscription ? "Subscribed" : "Unsubscribed";
+  res
+    .status(STATUS_CODES.OK)
+    .json(new ApiResponse(STATUS_CODES.OK, `${message} successfully!`));
 });
 
 const getSubscribedChannels = asyncHandler(async (req, res) => {
   const { channelId } = req.params;
 
-  if (!mongoose.isValidObjectId(channelId))
+  if (!isValidObjectId(channelId))
     throw new ApiError(STATUS_CODES.BAD_REQUEST, "Invalid Channel Id!");
 
   const subscriptions = await Subscription.aggregate([
@@ -85,7 +80,7 @@ const getSubscribedChannels = asyncHandler(async (req, res) => {
 const getSubscribers = asyncHandler(async (req, res) => {
   const { channelId } = req.params;
 
-  if (!mongoose.isValidObjectId(channelId))
+  if (!isValidObjectId(channelId))
     throw new ApiError(STATUS_CODES.BAD_REQUEST, "Invalid Channel Id!");
 
   const subscriptions = await Subscription.aggregate([

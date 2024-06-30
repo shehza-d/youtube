@@ -1,0 +1,5 @@
+- Rate limiting with `express-rate-limit`
+- API documentation with swagger
+- integrate AI for recommendations system
+- Convert backend to NestJs
+- Backend Tests

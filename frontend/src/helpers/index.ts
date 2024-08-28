@@ -1,7 +1,9 @@
 export const getUrl = () => {
   const isProduction = window.location.href.includes("https");
 
-  const baseUrl = isProduction ? "hkikik" : "http://localhost:3003";
+  const baseUrl = isProduction
+    ? import.meta.env.VITE_APP_API_BASE
+    : "http://localhost:3003";
   return baseUrl;
 };
 

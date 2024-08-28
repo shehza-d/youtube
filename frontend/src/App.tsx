@@ -7,9 +7,11 @@ export default function App() {
   useCheckLoginStatus(); // ping to server to check token and show pages according to user log status
 
   return (
-    <main className="bg-slate-200 dark:bg-[#121212] dark:text-white">
+    <main className="bg-slate-200 dark:bg-slate-700 dark:text-white">
       <Navbar />
-      <AppRouter />
+      <div className="min-h-[calc(100vh-92px)]">
+        <AppRouter />
+      </div>
       <Toaster /> {/* Toaster is being used for notifications */}
     </main>
   );

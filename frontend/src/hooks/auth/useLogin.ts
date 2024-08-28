@@ -42,7 +42,7 @@ export default function useLogin() {
 
       dispatch(addUser(res.data!));
 
-      navigate(-1);
+      navigate(-1); // not working remove
 
       toast.success(res.message || "Logged In Successfully!");
     } catch (err: any) {

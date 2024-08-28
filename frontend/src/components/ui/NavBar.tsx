@@ -51,9 +51,9 @@ export default function Navbar() {
       className={`${navColor} sticky inset-x-0 top-0 z-50 w-full border-b px-4`}
     >
       <nav className="mx-auto flex max-w-7xl items-center py-2">
-        <div className="mr-4 w-12 shrink-0 sm:w-16">
+        <a href="/" className="mr-4 w-12 shrink-0 sm:w-16">
           <Logo />
-        </div>
+        </a>
         <div className="relative mx-auto hidden w-full max-w-md overflow-hidden sm:block">
           <input
             className="w-full border bg-transparent py-1 pl-8 pr-3 placeholder-white outline-none sm:py-2"

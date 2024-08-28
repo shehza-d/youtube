@@ -24,40 +24,40 @@ const getAllVideos = asyncHandler(async (req, res) => {
   } = req.query;
   //TODO: get all videos based on query, sort, pagination
 
-  const sortOptions = {
-    sortType: "desc" ? -1 : 1,
-  };
+  // const sortOptions = {
+  //   sortType: "desc" ? -1 : 1,
+  // };
 
   const pipeline: PipelineStage[] = [{ $match: { isPublished: true } }];
 
-  if (search_query) {
-    pipeline.push({
-      $search: {
-        index: "search-videos",
-        text: { query: search_query, path: ["title", "description"] },
-      },
-    });
-  } else if (userId) {
-    // pipeline.push({
-    // $match: { owner: new mongoose.Types.ObjectId(userId) },
-    // });
-  }
+  // if (search_query) {
+  //   pipeline.push({
+  //     $search: {
+  //       index: "search-videos",
+  //       text: { query: search_query, path: ["title", "description"] },
+  //     },
+  //   });
+  // } else if (userId) {
+  // pipeline.push({
+  // $match: { owner: new mongoose.Types.ObjectId(userId) },
+  // });
+  // }
 
-  if (sortBy && sortType) {
-    //console.log(sortBy, sortType);
-    pipeline.push({
-      $sort: {
-        // [sortBy]: sortType === "asc" ? 1 : -1,
-      },
-    });
-  } else {
-    pipeline.push({ $sort: { createdAt: -1 } });
-  }
+  // if (sortBy && sortType) {
+  //   //console.log(sortBy, sortType);
+  //   pipeline.push({
+  //     $sort: {
+  //       [sortBy]: sortType === "asc" ? 1 : -1,
+  //     },
+  //   });
+  // } else {
+  pipeline.push({ $sort: { createdAt: -1 } });
+  // }
 
   const limit = Number(req.query?.limit) || 10;
 
   const videos = await Video.find({
-    $or: [{ title: { $search: search_query } }, { owner: userId }],
+    // $or: [{ title: { $search: search_query } }, { owner: userId }],
   })
     .skip(+page)
     .limit(limit)

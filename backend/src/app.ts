@@ -25,6 +25,13 @@ import { likeRouter } from "./routes/like.routes.js";
 import { playlistRouter } from "./routes/playlist.routes.js";
 import { dashboardRouter } from "./routes/dashboard.routes.js";
 
+// remove
+// app.use((_, res, next) => {
+//   console.log("sssssssssssssssssssssssssssssssssssssssssssssssssssss");
+//   setTimeout(() => next(), 3000);
+// });
+// remove
+
 // routes declaration
 app.use("/api/v1/healthcheck", healthCheckRouter);
 app.use("/api/v1/users", userRouter);
@@ -36,6 +43,8 @@ app.use("/api/v1/likes", likeRouter);
 app.use("/api/v1/playlist", playlistRouter);
 app.use("/api/v1/dashboard", dashboardRouter);
 
-app.use("*", (_, res) => res.send("Route not found on Server!"));
+app.use("*", (_, res) =>
+  res.status(404).send({ message: "Route not found on Server!" }),
+);
 
 export { app };

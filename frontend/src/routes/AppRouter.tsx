@@ -1,13 +1,14 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthPage } from "../pages";
+import { AllVideosHome, AuthPage } from "../pages";
 import { useSelector } from "react-redux";
 import { RootState } from "../types";
 import Loading from "../components/ui/LoadingPage";
+import VideoDetail from "../pages/VideoDetail";
 
 export default function AppRouter() {
   const { isUserLoggedIn } = useSelector((state: RootState) => state.auth);
 
-  console.log("🚀 ~ AppRouter ~ isUserLoggedIn:", isUserLoggedIn);
+  // console.log("🚀 ~ AppRouter ~ isUserLoggedIn:", isUserLoggedIn);
 
   // initial state to show loading at first glance
   if (isUserLoggedIn === null) return <Loading />;
@@ -17,7 +18,7 @@ export default function AppRouter() {
       <Routes>
         {/* Common routes */}
 
-        <Route path="/" element={<>Home page where videos will be shown</>} />
+        <Route path="/" element={<AllVideosHome />} />
         <Route path="/not-found" element={<>404 Page not found</>} />
         <Route path="/search" element={<>Video Listing Page (List View)</>} />
         <Route path="/c/:userName" element={<>Channel Video List Page</>} />
@@ -43,7 +44,7 @@ export default function AppRouter() {
               path="/"
               element={<h1 className="text-red-600">Hello Dashboard</h1>}
             />
-            <Route path="/video/:id" element={<>Video Detail Page</>} />
+            <Route path="/video/:id" element={<VideoDetail />} />
             <Route path="/dashboard" element={<>Admin Dashboard Page</>} />
             <Route
               path="/c/:userName/subscribed"

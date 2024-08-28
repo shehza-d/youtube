@@ -1,0 +1,4 @@
+.env
+app.yaml
+youtube-instance-login-key.pem
+node_modules

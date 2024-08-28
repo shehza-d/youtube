@@ -2,6 +2,8 @@
 
 ### [Model Link](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj?origin=share)
 
+### [API Docs](https://documenter.getpostman.com/view/23050191/2sA2xb5vDe)
+
 Server Link [products-api-dot-learning-chatbot-393109.lm.r.appspot.com](https://products-api-dot-learning-chatbot-393109.lm.r.appspot.com)
 
 hosting on aws EC2

@@ -1,11 +1,15 @@
 - Rate limiting with `express-rate-limit`
+- dockerization app left
+
 - cancel edit info api call from frontend
 - API documentation with swagger
 - integrate AI for recommendations system
 - Convert backend to NestJs
 
-Advance 
+Advance
+
 - Backend Tests
+
 - Abort Controller (cancel upload)
 - Large file Upload (upto 20GB)
-- Streaming 
+- Streaming
